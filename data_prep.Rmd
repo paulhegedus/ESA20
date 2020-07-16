@@ -17,6 +17,10 @@ The data used in this project have already been aggregated together during the O
 
 The sections below describes the process of importing data, selecting the columns with covariate or response data we are interested in, exploring this data, and executing one more round of data cleaning and assessment. Protein data is interpolated to the location of yield data because the yield data is collected at a higher spatial resolution. Protein is interpolated using co-kriging with yield. Finally, the net-return for each point is calculated using a protein premium/dockage function, the cost of nitrogen, and the price received for non-organic winter wheat. The economic data used is from 2016, the most recent year that we have access to all three aspects of the net-return parameters that are not collected on-farms.
 
+```{r}
+library()
+```
+
 ## Import, Select, Clean
 This section shows the code used for importing data, selecting the variables of interest, executing a final clean, and saving exploratory plots. These are lumped together in order to save space in RAM by executing the functions for each field with only that field in memory. 
 
