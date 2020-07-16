@@ -28,6 +28,41 @@ Regardless of management, every field experienced variation in production, quali
 ### Introduction
 
 
+* Introduce Industrial Agriculture – Same as ICPA
+  + Describe the input-centric nature of industrial agriculture and the benefits such as increased yields and the theoretical meeting of required calories for all people (however because of food waste and distribution disparity we still have hunger and starvation). 
+  + Address the consequences of industrial agriculture such as GHG emissions and non-point pollution.
+  +	Discuss the potential to use data to optimize our inputs to meet our goals while reducing the consequences of current approaches.
+*	Field Specificity
+  +	To improve our decisions in a more sustainable fashion, we need to think about the ecology of the systems we are managing
+  +The site, time, and history specificity of fields has complicated integration of ecological principles into an agriculture focused on regionwide prescriptions. 
+    1) Fig. 2 Show cloud of data from one year compared to the next yld vs N, pro vs N
+    2)	Fig. 3 Show variability in crop yield/quality across a single year (map)
+    3)	Fig. 4 Show fields with curvature in crop response, show fields with no curvature in crop response – demonstrate history of management
+*	Agricultural Data Revolution
+  +	We already have the stream of data to measure field specific responses
+  +	Fig. 1 Plot of data generated on farms
+  +	Sources of data
+*	Adaptive Management >> Precision Agriculture
+  +	Crop managers now have the ability to generate field-specific management plans using field-specific data to optimize inputs based on pollution minimization and profit maximization
+    1) Right place, right amount, right time, right input – precision agriculture
+    2) Use slide showing profit maximization
+b.	Step towards sustainable agriculture by optimizing inputs based on site-specific and temporal specific conditions -> adaptive management 
+i.	For example, traditional nitrogen (N) fertilizer management consisted of applying a uniform rate, causing N inefficiencies and non-point nitrate pollution.
+ii.	Discuss precision agriculture potential to reduce N loss by tailoring N rates within fields rather than applying a uniform rate. However, farmers need to turn a profit and so N rates can be optimized on maximizing NR as well. 
+VI.	Justification
+a.	Precision agriculture technologies provide an empirical approach to adaptive management.
+b.	Understanding the primary sources of field-specific variation in production and quality across the field and over time enables producers to identify if, when, and where nitrogen fertilizer should be applied. 
+c.	Equally important, the spatial and temporal resolution at which variability in agroecosystem performance can be detected creates a mechanism to monitor and ground-truth ecosystem response to global change.
+VII.	Goal and Objectives
+a.	This research seeks to identify spatiotemporal drivers of variation in production (grain yield), quality (grain protein), and net-returns for Northern Great Plains small-grain agroecosystems and evaluates their relatedness and consistency between fields.
+b.	What are the drivers of variability in production, quality, and net-returns within fields for a given year? How does this vary for the same field in different years i.e. drivers of variation across years?
+i.	evaluate the drivers of spatial variation in production, quality, and net-returns for wheat within fields with a sensitivity and variance component analysis on the residuals of crop yield or protein for parameters from each field and each year
+ii.	What is the major driver of variation for a field in a given year? Are there commonalities between drivers of variation in the same field for different years? 
+c.	How consistent are drivers of variability for fields of the same farm? Same region?
+i.	Are there commonalities in the drivers of variation for fields in the same farm? Are the drivers of variation for all fields of a farm consistent for a given year? How do these change between years? Are there differences between fields/farms in a region? Are there differences in fields/farms across regions?
+i.	Compare results of the sensitivity analysis between fields by farm and region. Compare different regions. 
+
+
 
 ### Methods
 

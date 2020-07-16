@@ -1,0 +1,43 @@
+name: "ESA2020-Hegedus"
+output_dir: "."
+navbar:
+  title: "ESA2020-Hegedus"
+  left:
+    - text: "Home" 
+      href: index.html
+    - text: "Introduction"
+      href: introduction.html
+    - text: "Methods"
+      menu:
+        - text: "Data Preparation"
+          href: DataPrep.html
+        - text: "Field Analysis"
+          menu: 
+            - text: "sec1"
+              href: analysis_sec1.html
+            - text: "sec35middle"
+              href: analysis_sec35middle.html
+            - text: "carlinwest"
+              href: analysis_carlinwest.html
+            - text: "henrys"
+              href: analysis_henrys.html
+            - text: "minnies"
+              href: analysis_minnies.html
+            - text: "sre910"
+              href: analysis_sre910.html
+            - text: "gramsmoms"
+              href: analysis_gramsmoms.html
+            - text: "sre1314"
+              href: analysis_sre1314.html
+        - text: "ESA Analysis"
+          href: AnalysisESA.html
+    - text: "Results"
+      href: results.html
+    - text: "Discussion"
+      href: discussion.html
+    - text: "Contact"
+      href: contact.html 
+    
+
+
+    
