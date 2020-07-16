@@ -3,6 +3,52 @@ title: "Prepare Data"
 author: "Paul Hegedus"
 output: html_document
 ---
+This section covers the preparation of data for this project's analysis. See the methods overview [page](methods.html) for a formal description of the methods used for this project and for more detail on the collection process of the data used in this project.
 
+The data used in this project is from the On-Farm Precision Experiments project at Montana State University. The project aims to provide a decision aid tool for producers that allows them to simulate management outcomes under various economic and weather scenarios, using data driven solutions to address the uncertainty in the price and weather condition in the upcoming year. The OFPE project operates with the mindset that experimentation is critical to understanding the field specific response of crops to agricultural inputs and the environment. 
+
+For each field used in the OFPE project, nitrogen fertilizer rates are randomly stratified on previous yield, protein, and previously applied nitrogen rates when possible. The as-applied data is collected from each farmer's fertilizer sprayer or spreader. Crop yield and quality are measured by instruments on the combine and are collected during harvest operations. Crop yield is collected by the combine yield monitor, standard in most modern combines, and quality is measured as grain protein percent. Protein is calculated by the CropScan 3300H infrared analyzer mounted on the combine. Yield data is collected ~3 seconds and protein data is collected ~10 seconds, resulting in datasets with unequal spatial resolutions. 
+
+Net-return is calculated as a function of yield, protein, the cost of nitrogen, and other fixed costs associated with producing the crop. In Montana, wheat producers receive a protein premium for grain protein content above a specified threshold, while a dockage is non-linearly imposed if grain protein content falls below the threshold.
+
+In addition to data collected on-farms, open source remotely sensed data is gathered as covariates for developing models of crop yield, quality, and net-return. These include topographic variables such as elevation, slope, aspect, and topographic position index (TPI). Time bound covariates are collected from the year prior to the harvest year, and from January 1st to March 30th of the current year. This is because March 30th is the date at which farmers need to decide on their top-dress nitrogen fertilizer applications. Time bound covariates include weather data, such as precipitation and growing degree days, and vegetation index data, of which NDVI was used. 
+
+The data used in this project have already been aggregated together during the OFPE data cycle. See the [OFPE Technical Website](https://paulhegedus.github.io/OFPE-Website/) for more information on this process. Yield and protein data that are less than 30m from the field edge are removed, as well as observations above or below 4 standard deviations from the field mean. A 10m grid is applied across each field and observed yield and protein data points that fall within each grid are assessed again as to whether they constitute as a local outlier and removed if so. The mean for each grid cell is calculated and assigned to the centroid of each cell. Aggregating to the centroids of a 10m grid is used to reduce the noise in the dataset due to machine and collection errors while retaining a fine spatial resolution. It also reduces the size of the dataset, improving analysis speeds.
+
+The sections below describes the process of importing data, selecting the columns with covariate or response data we are interested in, exploring this data, and executing one more round of data cleaning and assessment. Protein data is interpolated to the location of yield data because the yield data is collected at a higher spatial resolution. Protein is interpolated using co-kriging with yield. Finally, the net-return for each point is calculated using a protein premium/dockage function, the cost of nitrogen, and the price received for non-organic winter wheat. The economic data used is from 2016, the most recent year that we have access to all three aspects of the net-return parameters that are not collected on-farms.
+
+## Import, Select, Clean
+This section shows the code used for importing data, selecting the variables of interest, executing a final clean, and saving exploratory plots. These are lumped together in order to save space in RAM by executing the functions for each field with only that field in memory. 
+
+For each file read in, the data type is assessed (yield vs. protein). The data used has multiple columns for the same metric due to different data sources. In all cases, the source with the finest spatial resolution is selected. The vegetation index used is NDVI, so other indexes like NDRE and CIRE are removed. The only cleaning step is removing as-applied nitrogen rates above 300 lbs N/ per acre because these rates are clear machine collection errors, as this is greater than if a double rate was applied during turning or by mistake. 
+
+The 'raw' data is imported one file at a time, and then saved as 'clean' data. This 'clean' data is then used for interpolation and calculation of net-return.
+
+```{r}
+
+```
+
+## Interpolate Protein
+The discrepancy between the yield and protein spatial resolutions results in two datasets for each field per year. To calculate net-return and consolidate the data, protein is interpolated to the location of each yield point. Co-kriging is used for interpolation because it utilizes a relationship with a more densely sampled variable. In this case we are utilizing the relationship between yield and protein. 
+
+```{r}
+
+```
+
+## Calculate Net-Return
+Net-return is calculated for each point in the dataset. First, a model of premium/dockage is fit using 2016 data. Yield is multiplied by the price received per bushel for a base price received. The coefficients of the premium/dockage function are used with the interpolated protein data to calculate the increase/decrease from the base-price. The cost of nitrogen applied per point is calculated with the price per pound of nitrogen and subtracted from the base price. Finally the cost of all other expenses are subtracted for a final net-return for each point.
+
+```{r}
+
+```
+
+## Explore Data
+The code below runs funcitons that produce exploratory plots and maps of the data. These include plotting each covariate against yield, protein, and net-return as well as maps of as-applied nitrogen, yield, protein, and net-return.
+
+The functions below use 'prepped' data for plotting and mapping. This data can be used to assess relationships between variables.
+
+```{r}
+
+```
 
 
