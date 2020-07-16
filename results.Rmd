@@ -1,0 +1,17 @@
+---
+title: "Results"
+author: "Paul Hegedus"
+output: html_document
+---
+
+  *	Fig. 1 PCO analysis of the most elastic parms? Look for clusters of farms and regions
+    +	Table 1. Cols = Region, Farm, Field, Yld.MaxElast, Yld.MinElast, Pro.MaxElast, Pro.MinElast, NR.MaxElast, NR.MinElast
+      1)	How often did the most or least elastic parameter change between years for a given year? 
+      2)	Commonalities/differences in fields of same farm
+      3)	Commonalities/differences in fields of same region
+  *	Plot 1 & 2. Stacked histogram of the most common parameters with maximum elasticity, side-by-side bar chart with colors for yld, pro, or NR… 1 for each year
+    +	Shows the most common parameters that were the most elastic in each year for all fields. Shows the difference between different years.
+  *	Appendix 
+    +	Tables: Sensitivity analysis for all fields and year combinations
+    +	Plots: Observed Yld, Pro, NR from each field and year
+

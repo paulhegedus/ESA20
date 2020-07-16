@@ -9,8 +9,10 @@ navbar:
       href: introduction.html
     - text: "Methods"
       menu:
+        - text: "Overview"
+          href: methods.html
         - text: "Data Preparation"
-          href: DataPrep.html
+          href: data_prep.html
         - text: "Field Analysis"
           menu: 
             - text: "sec1"
@@ -30,13 +32,13 @@ navbar:
             - text: "sre1314"
               href: analysis_sre1314.html
         - text: "ESA Analysis"
-          href: AnalysisESA.html
+          href: esa_analysis.html
     - text: "Results"
       href: results.html
     - text: "Discussion"
       href: discussion.html
-    - text: "Contact"
-      href: contact.html 
+    - text: "References"
+      href: references.html 
     
 
 

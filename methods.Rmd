@@ -1,0 +1,44 @@
+---
+title: "Methods"
+author: "Paul Hegedus"
+output: html_document
+---
+  * Gather data 
+    + 9 fields OFPE data from database Winter-wheat yield and protein, and as-applied N data have been collected from fields, along with remotely sensed topographic, weather, and historical vegetation index data.
+    + 2016 - 2019 economic data (price received, cost of N)
+  * Prepare data
+    + import
+    + remove any outliers
+    + check for colinearity
+    + explore data
+    + interpolate protein
+    + calculate NR 
+  * Field Analysis
+    + residuals?/center data?
+    + split data
+    + for each field, for each model, for each resp var
+      1) fit model with backwards AIC based selection
+      2) validate model, calc rmse
+      3) select best model, describe variance components
+      4) do sensitivity analysis
+    + record 
+      1) most influential paramter/most sensitive parameter w/in field
+      2) largest variance component w/in field
+      3) most influential paramter/most sensitive parameter across year
+      4) largest variance component across year
+  * ESA Analysis
+    + Most common influential parameter w/in field
+    + Most common influential parameter across years
+    + Most common var comp parm w/in field
+    + Most common var comp parm across years
+    + relationships between farms/farmers
+    + relationships between resp vars. same parms affect yld and pro? same as NR?
+  
+*ref*
+  
+  *	Winter-wheat yield and protein, and as-applied N data have been collected from fields, along with remotely sensed topographic, weather, and historical vegetation index data.
+    +	Can describe similar to ICPA
+  *	For 9 fields, non-linear logistic, GAM, and multiple linear regression/mixed models were used to fit residuals of production, quality, and net-return as a function of as-applied N, topographic variables, weather, soil moisture, soil type, and prior productivity (NDVI up to two years prior).
+  *	Sensitivity and variance component analysis was performed for each field for multiple years. The least and most sensitive parameter for each field in each year was noted for each field and year combination. These were compared for the same field in different years, for fields of the same farm in a given year and across years. For fields in the same region and across regions.
+  
+
