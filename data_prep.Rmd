@@ -21,18 +21,26 @@ The sections below describes the process of importing data, selecting the column
 xfun::embed_file("refs/hegedus_lres535_finalProject.pdf")
 ```
 
-To begin, a data.frame is created with field information.
+To begin, a data.frame is created with field information and folders to hold analytical outputs is created.
 
 ```{r}
 library(magrittr)
-source("R/importCleanSelect.R")
-#source("R/subsetFuns.R")
+library(ggplot2)
+source("R/importCleanSelectFuns.R")
+source("R/subsetFuns.R")
+source("R/interpolateProteinFuns.R")
+source("R/createOutputFolders.R")
+source("R/NRcalcFuns.R")
+source("R/exploreDataFuns.R")
+
+# data frame of fields
 fields <- data.frame(field = c("sec1east", "sec1west", "sec35mid", 
                                "carlinwest", "henrys", "minnies",
                                "sre1314"),
                      farmer = c(rep("B", 3),
                                 rep("W", 3),
                                 "M"))
+createOutputsFolder(fields$field) %>% invisible()
 ```
 
 ## Import, Select, Clean
@@ -43,28 +51,67 @@ For each file read in, the data type is assessed (yield vs. protein). The data u
 The 'raw' data is imported one file at a time, and then saved as 'clean' data. This 'clean' data is then used for interpolation and calculation of net-return.
 
 ```{r, eval = FALSE}
-raw <- list.files("raw") # vector of 'raw' files
+# vector of 'raw' files
+raw <- list.files("raw") 
 sapply(raw, impClnSel, "raw", "clean", "NDVI") %>% invisible()
 ```
 
 ## Interpolate Protein
-The discrepancy between the yield and protein spatial resolutions results in two datasets for each field per year. To calculate net-return and consolidate the data, protein is interpolated to the location of each yield point. A more detailed methodology and justification for universal kriging in this case can be found in the project report below.
+The discrepancy between the yield and protein spatial resolutions results in two datasets for each field per year. To calculate net-return and consolidate the data, protein is interpolated to the location of each yield point. A more detailed methodology and justification for universal kriging in this case can be found in the project *Comparison of universal and co-kriging of protein percent in wheat fields in Montana*, downloadable from the Hegedus2018-LRES535 link below.
 
-```{r echo=FALSE}
-xfun::embed_file(path = "refs/hegedus_lres535_finalProject.pdf", name = "Hegedus2018_LRES535.pdf", text = "Comparison of universal and co-kriging of protein percent in wheat fields in Montana")
+```{r, echo=FALSE}
+xfun::embed_file(path = "refs/hegedus_lres535_finalProject.pdf", 
+                 name = "Hegedus2018_LRES535.pdf", 
+                 text = "Download: Hegedus2019-LRES535")
 ```
+
+\newline
+
+First, a list of field names is made and cleaned data is subsetted by field name. For each field subset of data, it is further divided by year. This returns a list for each field containing a list with filenames for the most recent year the crop has been harvested and the previous year it was harvested.
 
 ```{r, eval = FALSE}
 field_list <- as.list(fields$field)
-field_list <- lapply(field_list, subsetCharVector, raw)
+# vector of 'clean' files
+clean <- list.files("clean") 
+field_list <- lapply(field_list, subsetCharVector, clean)
 
+recent_years <- "2019|2018"
+previous_years <- "2017|2016"
+field_list <- lapply(field_list, subsetYears, recent_years, previous_years)
+```
+
+For each field and each year (recent and previous), this data will be imported and used to krige protein data to the yield data points. This data is then saved to another folder for further processing before analysis. 
+
+```{r, eval = FALSE}
+years <- c("2019", "2018", "2017", "2016")
+lapply(field_list, interpolateProWrapper, "clean", "prepped", years) %>% invisible()
 ```
 
 ## Calculate Net-Return
 Net-return is calculated for each point in the dataset. First, a model of premium/dockage is fit using 2016 data. Yield is multiplied by the price received per bushel for a base price received. The coefficients of the premium/dockage function are used with the interpolated protein data to calculate the increase/decrease from the base-price. The cost of nitrogen applied per point is calculated with the price per pound of nitrogen and subtracted from the base price. Finally the cost of all other expenses are subtracted for a final net-return for each point.
 
-```{r}
+The most recent economic data available is from 2016, however we have records for the cost of nitrogen and prices received from 2000 - 2016. The cost of nitrogen and the price received will be a respective average from 2011 - 2016. The fixed cost per acre is assumed to be $75 per acre.
 
+```{r, eval = FALSE}
+Prc <- data.table::fread("econ/MT_Organic_vs_Conv_wheat_N_prices_with_Climate.csv")
+Prc <- aggregate(.~Year, data=Prc, FUN = mean)
+Prc <- Prc[(nrow(Prc) - 4):nrow(Prc), ]
+
+PD <- data.table::fread("econ/Billings_PremDock_2016.csv")
+colnames(PD) <- c("PCpro", "Bill", "pro", "PremDock")
+PD$prosq <- PD$pro^2
+fm <- lm(PD$PremDock ~ PD$pro + PD$prosq) 
+
+econ_list <- list(
+  Bp = mean(as.numeric(Prc[, "HRWWconv"])),
+  B0pd = as.vector(coef(fm)[1]),
+  B1pd = as.vector(coef(fm)[2]),
+  B2pd = as.vector(coef(fm)[3]),
+  CN = mean(as.numeric(Prc[, "Ncost"])),
+  FC = 75
+)
+prepped <- list.files("prepped")
+lapply(prepped, NRfunWrapper, "prepped", econ_list) %>% invisible()
 ```
 
 ## Explore Data
@@ -72,8 +119,10 @@ The code below runs funcitons that produce exploratory plots and maps of the dat
 
 The functions below use 'prepped' data for plotting and mapping. This data can be used to assess relationships between variables.
 
-```{r}
-
+```{r, eval = FALSE}
+prepped <- list.files("prepped")
+lapply(prepped, explore, "prepped", "results", years) %>% invisible()
 ```
 
+Data is now consolidated and prepared for analysis and initial plots and maps have been made to explore the datasets. The next step is to fit models for each field individually to determine the field specific covariates that have the largest influence on response variables.
 
