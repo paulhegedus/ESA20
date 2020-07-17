@@ -12,6 +12,7 @@ output: html_document
     + check for colinearity
     + explore data
     + interpolate protein
+      1) reference/embed lres 535 project paper
     + calculate NR 
   * Field Analysis
     + residuals?/center data?

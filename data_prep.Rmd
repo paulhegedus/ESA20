@@ -15,10 +15,24 @@ In addition to data collected on-farms, open source remotely sensed data is gath
 
 The data used in this project have already been aggregated together during the OFPE data cycle. See the [OFPE Technical Website](https://paulhegedus.github.io/OFPE-Website/) for more information on this process. Yield and protein data that are less than 30m from the field edge are removed, as well as observations above or below 4 standard deviations from the field mean. A 10m grid is applied across each field and observed yield and protein data points that fall within each grid are assessed again as to whether they constitute as a local outlier and removed if so. The mean for each grid cell is calculated and assigned to the centroid of each cell. Aggregating to the centroids of a 10m grid is used to reduce the noise in the dataset due to machine and collection errors while retaining a fine spatial resolution. It also reduces the size of the dataset, improving analysis speeds.
 
-The sections below describes the process of importing data, selecting the columns with covariate or response data we are interested in, exploring this data, and executing one more round of data cleaning and assessment. Protein data is interpolated to the location of yield data because the yield data is collected at a higher spatial resolution. Protein is interpolated using co-kriging with yield. Finally, the net-return for each point is calculated using a protein premium/dockage function, the cost of nitrogen, and the price received for non-organic winter wheat. The economic data used is from 2016, the most recent year that we have access to all three aspects of the net-return parameters that are not collected on-farms.
+The sections below describes the process of importing data, selecting the columns with covariate or response data we are interested in, exploring this data, and executing one more round of data cleaning and assessment. Protein data is interpolated to the location of yield data because the yield data is collected at a higher spatial resolution. Universal krigin is used to interpolate protein to yield points because of prior work (see pdf below). Finally, the net-return for each point is calculated using a protein premium/dockage function, the cost of nitrogen, and the price received for non-organic winter wheat. The economic data used is from 2016, the most recent year that we have access to all three aspects of the net-return parameters that are not collected on-farms.
+
+```{r echo=FALSE}
+xfun::embed_file("refs/hegedus_lres535_finalProject.pdf")
+```
+
+To begin, a data.frame is created with field information.
 
 ```{r}
-library()
+library(magrittr)
+source("R/importCleanSelect.R")
+#source("R/subsetFuns.R")
+fields <- data.frame(field = c("sec1east", "sec1west", "sec35mid", 
+                               "carlinwest", "henrys", "minnies",
+                               "sre1314"),
+                     farmer = c(rep("B", 3),
+                                rep("W", 3),
+                                "M"))
 ```
 
 ## Import, Select, Clean
@@ -28,14 +42,21 @@ For each file read in, the data type is assessed (yield vs. protein). The data u
 
 The 'raw' data is imported one file at a time, and then saved as 'clean' data. This 'clean' data is then used for interpolation and calculation of net-return.
 
-```{r}
-
+```{r, eval = FALSE}
+raw <- list.files("raw") # vector of 'raw' files
+sapply(raw, impClnSel, "raw", "clean", "NDVI") %>% invisible()
 ```
 
 ## Interpolate Protein
-The discrepancy between the yield and protein spatial resolutions results in two datasets for each field per year. To calculate net-return and consolidate the data, protein is interpolated to the location of each yield point. Co-kriging is used for interpolation because it utilizes a relationship with a more densely sampled variable. In this case we are utilizing the relationship between yield and protein. 
+The discrepancy between the yield and protein spatial resolutions results in two datasets for each field per year. To calculate net-return and consolidate the data, protein is interpolated to the location of each yield point. A more detailed methodology and justification for universal kriging in this case can be found in the project report below.
 
-```{r}
+```{r echo=FALSE}
+xfun::embed_file(path = "refs/hegedus_lres535_finalProject.pdf", name = "Hegedus2018_LRES535.pdf", text = "Comparison of universal and co-kriging of protein percent in wheat fields in Montana")
+```
+
+```{r, eval = FALSE}
+field_list <- as.list(fields$field)
+field_list <- lapply(field_list, subsetCharVector, raw)
 
 ```
 
