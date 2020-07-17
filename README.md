@@ -2,6 +2,9 @@ Data Informed Adaptive Management in Agriculture
 ================
 Paul Hegedus, Bruce Maxwell, Stephanie Ewing
 
+  - [Render README](#render-readme) - Render README.Rmd when it changes
+    and commit the result
+
 <right>
 <img src="images/msu_coa_logo.png" align = "right"  width="170" height = "150"/>
 <img src="images/OFPE_logo.png" align = "right"  width="200" height = "150"/>
