@@ -1,3 +1,5 @@
+library(data.table)
+
 #' @title Subsetting vector by pattern matching
 #'
 #' @description Subset a character vector by matching a character pattern. 

@@ -1,3 +1,6 @@
+library(data.table)
+library(dplyr)
+
 #' @title Function for importing, cleaning, and selecting the data
 #'
 #' @description Calls impDat(), clnDat(), selDat() and saves data to a the 
@@ -72,8 +75,10 @@ clnDat <- function(dat) {
 #' @return Data table with variables used for analysis.
 selDat <- function(dat, veg_index) {
   stopifnot(
-    is.data.frame(dat)
+    is.data.frame(dat),
+    is.character(veg_index)
   )
+  veg_index <- tolower(veg_index)
   dat <- dplyr::select(dat, -c("geometry", "cell_id", "grid", "ssm_cy",
                                "ssm_py", "susm_cy", "susm_py", "musym"))
   df <- matrix(NA, nrow = nrow(dat), ncol = 7) %>%

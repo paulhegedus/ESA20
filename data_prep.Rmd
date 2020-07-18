@@ -15,15 +15,17 @@ In addition to data collected on-farms, open source remotely sensed data is gath
 
 The data used in this project have already been aggregated together during the OFPE data cycle. See the [OFPE Technical Website](https://paulhegedus.github.io/OFPE-Website/) for more information on this process. Yield and protein data that are less than 30m from the field edge are removed, as well as observations above or below 4 standard deviations from the field mean. A 10m grid is applied across each field and observed yield and protein data points that fall within each grid are assessed again as to whether they constitute as a local outlier and removed if so. The mean for each grid cell is calculated and assigned to the centroid of each cell. Aggregating to the centroids of a 10m grid is used to reduce the noise in the dataset due to machine and collection errors while retaining a fine spatial resolution. It also reduces the size of the dataset, improving analysis speeds.
 
-The sections below describes the process of importing data, selecting the columns with covariate or response data we are interested in, exploring this data, and executing one more round of data cleaning and assessment. Protein data is interpolated to the location of yield data because the yield data is collected at a higher spatial resolution. Universal krigin is used to interpolate protein to yield points because of prior work (see pdf below). Finally, the net-return for each point is calculated using a protein premium/dockage function, the cost of nitrogen, and the price received for non-organic winter wheat. The economic data used is from 2016, the most recent year that we have access to all three aspects of the net-return parameters that are not collected on-farms.
+The sections below describes the process of importing data, selecting the columns with covariate or response data we are interested in, exploring this data, and executing one more round of data cleaning and assessment. Protein data is interpolated to the location of yield data because the yield data is collected at a higher spatial resolution. A more detailed methodology and justification for universal kriging in this case can be found in the project *Comparison of universal and co-kriging of protein percent in wheat fields in Montana*, downloadable from the Hegedus2018-LRES535 link below. Finally, the net-return for each point is calculated using a protein premium/dockage function, the cost of nitrogen, and the price received for non-organic winter wheat. The economic data used is from 2016, the most recent year that we have access to all three aspects of the net-return parameters that are not collected on-farms.
 
-```{r echo=FALSE}
-xfun::embed_file("refs/hegedus_lres535_finalProject.pdf")
+```{r, echo=FALSE}
+xfun::embed_file(path = "refs/hegedus_lres535_finalProject.pdf", 
+                 name = "Hegedus2018_LRES535.pdf", 
+                 text = "Download: Hegedus2019-LRES535")
 ```
 
 To begin, a data.frame is created with field information and folders to hold analytical outputs is created.
 
-```{r}
+```{r, warning = FALSE}
 library(magrittr)
 library(ggplot2)
 source("R/importCleanSelectFuns.R")

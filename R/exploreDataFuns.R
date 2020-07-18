@@ -1,3 +1,8 @@
+library(sp)
+library(raster)
+library(RColorBrewer)
+library(stringr)
+
 #' @title Function for generating exploratory figures.
 #' 
 #' @description Import a prepared file, make scatterplots of each variable against
@@ -20,7 +25,7 @@ explore <- function(file_name, in_folder, out_folder, years) {
   }
   
   dat <- impDat(file_name, "prepped")
-  exploreScatters(dat, field_name, out_folder)
+  #exploreScatters(dat, field_name, out_folder)
   exploreMaps(dat, field_name, out_folder)
   return(invisible())
 }
@@ -91,53 +96,69 @@ exploreScatters <- function(dat, field_name, out_folder) {
 #' @param out_Folder Location to save exploratory plots.
 #' @return Exploratory maps in the specified folder.
 exploreMaps <- function(dat, field_name, out_folder) {
-  if (any(grepl("yld", names(dat)))) {
+  # if (any(grepl("yld", names(dat)))) {
+  #   fig <- suppressWarnings(
+  #     suppressMessages(
+  #       plotMaps(dat,
+  #                "yld",
+  #                "Yield (bu/ac)",
+  #                "Rasterized Observed Yield ",
+  #                farmername = "Farmer",
+  #                FIELD = field_name)
+  #     )
+  #   ) 
+  #   ggsave(fig, 
+  #          file = paste0(out_folder, "/", field_name, "/explanatory/", field_name, 
+  #                        "_obsYld_", unique(dat$year), ".png"),
+  #          width = 7.5, height = 7.5, units = "in")
+  # }
+  # if (any(grepl("pro", names(dat)))) {
+  #   fig <- suppressWarnings(
+  #     suppressMessages(
+  #       plotMaps(dat,
+  #                "pro",
+  #                "Protein Percent",
+  #                "Rasterized Grain Protein ",
+  #                farmername = "Farmer",
+  #                FIELD = field_name)
+  #     )
+  #   ) 
+  #   ggsave(fig, 
+  #          file = paste0(out_folder, "/", field_name, "/explanatory/", field_name, 
+  #                           "_obsPro_", unique(dat$year), ".png"),
+  #          width = 7.5, height = 7.5, units = "in")
+  #   
+  # }
+  # if (any(grepl("NR", names(dat)))) {
+  #   fig <- suppressWarnings(
+  #     suppressMessages(
+  #       plotMaps(dat,
+  #                "NR",
+  #                "Net-Return ($/ac)",
+  #                "Rasterized Net-Return ",
+  #                farmername = "Farmer",
+  #                FIELD = field_name)
+  #     )
+  #   ) 
+  #   ggsave(fig, 
+  #          file = paste0(out_folder, "/", field_name, "/explanatory/", field_name, 
+  #                        "_obsNR_", unique(dat$year), ".png"),
+  #          width = 7.5, height = 7.5, units = "in")
+  # } 
+  if (any(grepl("aa_n", names(dat)))) {
     fig <- suppressWarnings(
       suppressMessages(
         plotMaps(dat,
-                 "yld",
-                 "Yield (bu/ac)",
-                 "Rasterized Observed Yield ",
+                 "aa_n",
+                 "As-Applied Nitrogen (lbs/ac)",
+                 "Rasterized As-Applied Nitrogen ",
                  farmername = "Farmer",
                  FIELD = field_name)
       )
     ) 
     ggsave(fig, 
            file = paste0(out_folder, "/", field_name, "/explanatory/", field_name, 
-                         "_obsYld_", unique(dat$year), ".png"),
-           width = 7.5, height = 7.5, units = "in")
-  }
-  if (any(grepl("pro", names(dat)))) {
-    fig <- suppressWarnings(
-      suppressMessages(
-        plotMaps(dat,
-                 "pro",
-                 "Protein Percent",
-                 "Rasterized Grain Protein ",
-                 farmername = "Farmer",
-                 FIELD = field_name)
-      )
-    ) 
-    ggsave(fig, 
-           file = paste0(out_folder, "/", field_name, "/explanatory/", field_name, 
-                            "_obsPro_", unique(dat$year), ".png"),
-           width = 7.5, height = 7.5, units = "in")
-    
-  }
-  if (any(grepl("NR", names(dat)))) {
-    fig <- suppressWarnings(
-      suppressMessages(
-        plotMaps(dat,
-                 "NR",
-                 "Net-Return ($/ac)",
-                 "Rasterized Net-Return ",
-                 farmername = "Farmer",
-                 FIELD = field_name)
-      )
-    ) 
-    ggsave(fig, 
-           file = paste0(out_folder, "/", field_name, "/explanatory/", field_name, 
-                         "_obsNR_", unique(dat$year), ".png"),
+                         "_obsAA_N_", unique(dat$year), ".png"),
            width = 7.5, height = 7.5, units = "in")
   } 
   return(invisible())

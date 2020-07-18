@@ -1,9 +1,0 @@
----
-title: "Analysis: <fieldname>"
-author: "Paul Hegedus"
-date: "7/15/2020"
-output: html_document
----
-
-template file for field analysis
-

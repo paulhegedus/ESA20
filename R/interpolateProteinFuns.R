@@ -1,3 +1,8 @@
+library(stringr)
+library(data.table)
+library(gstat)
+library(sp)
+
 #' @title Wrapper function for interpolating protein.
 #'
 #' @description Calls interpolatePro() and saves prepared yield data to a 

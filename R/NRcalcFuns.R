@@ -1,3 +1,5 @@
+library(data.table)
+
 #' @title Wrapper function for calculating and adding a net-return column to data 
 #' for analysis.
 #'

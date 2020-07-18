@@ -15,8 +15,10 @@ navbar:
           href: data_prep.html
         - text: "Field Analysis"
           menu: 
-            - text: "sec1"
-              href: analysis_sec1.html
+            - text: "sec1east"
+              href: analysis_sec1east.html
+            - text: "sec1west"
+              href: analysis_sec1west.html
             - text: "sec35middle"
               href: analysis_sec35middle.html
             - text: "carlinwest"

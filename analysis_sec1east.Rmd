@@ -1,0 +1,159 @@
+---
+title: 'Analysis: sec1east'
+author: "Paul Hegedus"
+output: html_document
+---
+This page documents the field specific analysis of 'sec1east'. This includes analysis for both years of experimentation. Data is split into training and validation datasets using 60 and 40 percent of the data, respectively. For each year, each model is fit to the response variable using backwards AIC based model selection. The final model is used to predict the response variable (yield, protein, net-return) in the validation dataset and for calculating a RMSE for each model. Each variable is then adjusted +/-10% and the response is predicted and compared to the default predictions to determine the most elastic covariates related to each response variable.
+
+For each final model, the AIC and RMSE are recorded in a table with the field, year, AIC, RMSE, and resposne variable. The most sensitive parameters for each model, resposne variable, and year are also recorded. These are used to asses patterns in drivers of the response variable between years in the same field and between fields in the same year, see [ESA Analysis](esa_analysis.html).
+
+```{r}
+library(magrittr)
+library(ggplot2)
+library(dplyr)
+source("R/importCleanSelectFuns.R")
+
+field_name <- "sec1east"
+
+out_folder <- paste0("results/", field_name," /") 
+field_dat <- list.files("prepped")[grepl(field_name, list.files("prepped"))]
+```
+
+# 2019 sec1east
+Analysis for the most recent year on record for the field. The section below imports the data from the specified field and year, explores the relationship between each response and as-applied N, and evaluates the correlations between covariates and responses. Depending on the correlations between parameters, covariates may be omitted. Data is centered if desired, and then 60% of the data is used for training and 40% is used for validation. 
+
+```{r}
+year <- "2019"
+raw_name <- field_dat[grepl(year, field_dat)]
+```
+
+## Import and Explore Data
+Import the specified field and year data and summarize the data. See exploratory figures for response variables plotted against each explanatory variable.
+
+```{r}
+dat <- impDat(raw_name, "prepped")
+summary(dat)
+```
+
+Now, explore correlations between variables within the dataset to assess any potential covariance issues between variables in analysis. A level of 0.7 is used as a threshold in which to remove a variable due to multicollinearity. 
+
+```{r}
+cor_mat <- dat %>% 
+  select(c(yld, pro, NR, prev_yld, aa_n, prev_aa_n,
+           aspect_rad, slope, elev, tpi, 
+           prec_cy, prec_py, gdd_cy, gdd_py,
+           veg_cy, veg_py, veg_2py,
+           x, y)) %>%
+  as.matrix()
+
+
+```
+
+* remove any covariates
+
+By default, all of the covariate data are centered to decrease the difference in magnitude between the scales of variables (i.e NDVI = 0 - 1, elev = 1500 - 2000). The response variables are also centered so that the variance from the mean is modeled. This allows inference on covariate influence on the variance of the responses around the mean. 
+
+```{r}
+
+```
+
+* center? 
+
+The last step before analysis is to split the data into training and validation datasets. 60% of the data is used for training models, while the validation dataset is reserved for assessing the ability of the final model to predict actual values.
+
+```{r}
+
+```
+
+* split data
+
+## Generalized Additive Model
+* backwards AIC based model selection
+* check diagnostics
+* make any adjustments
+* predict to validations set
+* calculate RMSE
+* output plots
+
+* sensitivity analysis
+* save outputs
+
+## Non-Linear Logistic Model
+* backwards AIC based model selection
+* evaluate assumptions
+* predict to validations set
+* calculate RMSE
+* output plots
+
+* sensitivity analysis
+* save outputs
+
+## Mixed Effects Model
+* backwards AIC based model selection
+* evaluate assumptions
+* predict to validations set
+* calculate RMSE
+* output plots
+
+* sensitivity analysis
+* save outputs
+
+## Save Outputs
+* save each table output
+* etc.
+
+# 2017 sec1east
+Analysis for the most recent year on record for the field. The section below imports the data from the specified field and year, explores the relationship between each response and as-applied N, and evaluates the correlations between covariates and responses. Depending on the correlations between parameters, covariates may be omitted. Data is centered if desired, and then 60% of the data is used for training and 40% is used for validation. 
+
+```{r}
+
+```
+
+## Import and Explore Data
+* bring in data
+* plot each response vs. N
+* explore correlations 
+* remove any covariates
+* center? 
+* split data
+
+## Generalized Additive Model
+* backwards AIC based model selection
+* evaluate assumptions
+* predict to validations set
+* calculate RMSE
+* output plots
+
+* sensitivity analysis
+* save outputs
+
+## Non-Linear Logistic Model
+* backwards AIC based model selection
+* evaluate assumptions
+* predict to validations set
+* calculate RMSE
+* output plots
+
+* sensitivity analysis
+* save outputs
+
+## Mixed Effects Model
+* backwards AIC based model selection
+* evaluate assumptions
+* predict to validations set
+* calculate RMSE
+* output plots
+
+* sensitivity analysis
+* save outputs
+
+## Save Outputs
+* save each table output
+* etc.
+
+
+
+
+
+
+
