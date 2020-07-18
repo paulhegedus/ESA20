@@ -12,6 +12,7 @@ library(magrittr)
 library(ggplot2)
 library(dplyr)
 source("R/importCleanSelectFuns.R")
+source("R/analysisFuns.R")
 
 field_name <- "sec1east"
 
@@ -35,37 +36,51 @@ dat <- impDat(raw_name, "prepped")
 summary(dat)
 ```
 
+Before looking at correlations, parameters with singular gradients are assessed and removed. At this point, the duplicate X and Y columns are removed.
+
+```{r}
+zv <- apply(dat, 2, function(x) length(unique(x)) == 1)
+dfr <- as.data.frame(dat)[, !zv] #(suppose df is the name of your dataset)
+dfr <- dfr[, -grep("X|Y", names(dfr))]
+```
+
+
 Now, explore correlations between variables within the dataset to assess any potential covariance issues between variables in analysis. A level of 0.7 is used as a threshold in which to remove a variable due to multicollinearity. 
 
-```{r}
-cor_mat <- dat %>% 
-  select(c(yld, pro, NR, prev_yld, aa_n, prev_aa_n,
-           aspect_rad, slope, elev, tpi, 
-           prec_cy, prec_py, gdd_cy, gdd_py,
-           veg_cy, veg_py, veg_2py,
-           x, y)) %>%
-  as.matrix()
-
-
+```{r, fig.height=6.5, fig.width=12}
+cor_mat <- dfr %>%
+  as.matrix() %>% 
+  cor(use = "pairwise.complete.obs") %>%
+  round(2)
+psych::cor.plot(cor_mat, main=paste0(field_name," Correlation Matrix"), upper=F)
 ```
 
-* remove any covariates
-
-By default, all of the covariate data are centered to decrease the difference in magnitude between the scales of variables (i.e NDVI = 0 - 1, elev = 1500 - 2000). The response variables are also centered so that the variance from the mean is modeled. This allows inference on covariate influence on the variance of the responses around the mean. 
+Remove any covariates if necessary.
 
 ```{r}
 
 ```
 
-* center? 
+
+By default, all of the covariate data except latitude and longitude are centered to decrease the difference in magnitude between the scales of variables (i.e NDVI = 0 - 1, elev = 1500 - 2000). The response variables are also centered so that the variance from the mean is modeled. This allows inference on covariate influence on the variance of the responses around the mean. 
+
+```{r}
+dfc <- dfr %>% dplyr::select(-c("x", "y"))
+for (i in 1:ncol(dfc)) {
+  dfc[, i] <- dfc[, i] - mean(dfc[, i], na.rm = T)
+}
+names(dfc) <- paste0("cent_", names(dfc))
+dfa <- cbind(dfr, dfc)
+```
+
 
 The last step before analysis is to split the data into training and validation datasets. 60% of the data is used for training models, while the validation dataset is reserved for assessing the ability of the final model to predict actual values.
 
 ```{r}
-
+dat_list <- dualSplit(dfa, 0.6)
+dt <- dat_list$trn
+dv <- dat_list$val
 ```
-
-* split data
 
 ## Generalized Additive Model
 * backwards AIC based model selection

@@ -25,7 +25,7 @@ xfun::embed_file(path = "refs/hegedus_lres535_finalProject.pdf",
 
 To begin, a data.frame is created with field information and folders to hold analytical outputs is created.
 
-```{r, warning = FALSE}
+```{r, warning = FALSE, message = FALSE, comment = FALSE, eval = FALSE}
 library(magrittr)
 library(ggplot2)
 source("R/importCleanSelectFuns.R")
@@ -53,7 +53,6 @@ For each file read in, the data type is assessed (yield vs. protein). The data u
 The 'raw' data is imported one file at a time, and then saved as 'clean' data. This 'clean' data is then used for interpolation and calculation of net-return.
 
 ```{r, eval = FALSE}
-# vector of 'raw' files
 raw <- list.files("raw") 
 sapply(raw, impClnSel, "raw", "clean", "NDVI") %>% invisible()
 ```
