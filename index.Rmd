@@ -1,6 +1,6 @@
 ---
 title: "Data Informed Adaptive Management in Agriculture"
-author: "Paul Hegedus, Bruce Maxwell, Stephanie Ewing"
+author: "Paul Hegedus, Bruce Maxwell"
 ---
 <right> <img src="images/msu_coa_logo.png" align = "right"  width="170" height = "150"/> <img src="images/OFPE_logo.png" align = "right"  width="200" height = "150"/> <img src="images/esa_logo.png" align = "right" width="200" height = "150"/> </right>
 
@@ -11,6 +11,13 @@ This website documents the work presented at the annual ESA conference in August
 * [ESA 2020](https://www.esa.org/saltlake/): 2020 ESA meeting and conference proceedings.
 
 * [Data Informed Adaptive Management in Agriculture](): Link to this presentation.
+
+```{r, echo=FALSE}
+xfun::embed_file(path = "refs/hegedus_esa2020_08032020.pptx", 
+                 name = "hegedus_esa2020_08032020.pptx", 
+                 text = "Download: Hegedus-ESA2020")
+```
+
 
 This project uses data from the The [On-Field Precision Experiments project](https://sites.google.com/site/ofpeframework/), led by Dr. Bruce Maxwell at Montana State University. You can find more information about the OFPE project at the [OFPE Project Website](https://sites.google.com/site/ofpeframework/) where general information and associated publications are posted, the [OFPE Technical Website](https://paulhegedus.github.io/OFPE-Website/) which describes the OFPE data framework and cycle, and the [OFPE](https://github.com/paulhegedus/OFPE.git) and [OFPEDATA](https://github.com/paulhegedus/OFPEDATA.git) R package README files and the OFPE package vignettes. Finally, other data products associated with the OFPE project include the [OFPE Web Application](https://paulhegedus.shinyapps.io/OFPE_AnalysisAndSim_App_v1/?_ga=2.189182059.1336631904.1592115204-590292424.1592115204) and the [OFPE CropScan Application](https://paulhegedus.shinyapps.io/OFPE_Protein_Application/?_ga=2.69643152.1880072526.1592481594-590292424.1592115204).
 

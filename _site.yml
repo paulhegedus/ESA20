@@ -33,10 +33,8 @@ navbar:
               href: analysis_gramsmoms.html
             - text: "sre1314"
               href: analysis_sre1314.html
-    - text: "Results"
-      href: results.html
-    - text: "Discussion"
-      href: discussion.html
+    - text: "Results & Discussion"
+      href: resultsNdiscussion.html
     - text: "References"
       href: references.html 
     

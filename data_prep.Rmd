@@ -20,7 +20,7 @@ The sections below describes the process of importing data, selecting the column
 ```{r, echo=FALSE}
 xfun::embed_file(path = "refs/hegedus_lres535_finalProject.pdf", 
                  name = "Hegedus2018_LRES535.pdf", 
-                 text = "Download: Hegedus2019-LRES535")
+                 text = "Download: Hegedus2018-LRES535")
 ```
 
 To begin, a data.frame is created with field information and folders to hold analytical outputs is created.
@@ -63,7 +63,7 @@ The discrepancy between the yield and protein spatial resolutions results in two
 ```{r, echo=FALSE}
 xfun::embed_file(path = "refs/hegedus_lres535_finalProject.pdf", 
                  name = "Hegedus2018_LRES535.pdf", 
-                 text = "Download: Hegedus2019-LRES535")
+                 text = "Download: Hegedus2018-LRES535")
 ```
 
 \newline

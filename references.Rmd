@@ -2,7 +2,67 @@
 title: "References"
 output: html_document
 ---
+Allaire, M., Wu, H., & Lall, U. (2018). National trends in drinking water quality violations. Proceedings of the National Academy of Sciences of the United States of America, 115(9), 2078–2083. https://doi.org/10.1073/pnas.1719805115
 
-list of references
+Bardgett, R. D., & Gibson, D. J. (2017). Plant ecological solutions to global food security. Journal of Ecology, 105(4), 859–864. https://doi.org/10.1111/1365-2745.12812
 
-Check out Bardgett and Gibson 2017
+Blackmore, S., & Moore, M. (1999). Remedial Correction of Yield Map Data. Precision Agriculture, 1(1), 53–66. https://doi.org/10.1023/A:1009969601387
+
+Bonny, B. P., Prasad, R. M., Sindhu, S., Varughese, M., Bonny, B. P., & Agricultural, K. (2005). Participatory learning , experimentation , action and dissemination ( PLEAD ) A model for farmer- participatory technology evolution in agriculture. 34(2), 111–115.
+
+Bucci, G., Bentivoglio, D., & Finco, A. (2018). Precision agriculture as a driver for sustainable farming systems: State of art in litterature and research. Quality - Access to Success, 19(S1), 114–121.
+
+Capel, P. D., McCarthy, K. A., & Barbash, J. E. (2008). National, holistic, watershed-scale approach to understand the sources, transport, and fate of agricultural chemicals. Journal of Environmental Quality, 37(3), 983–993. https://doi.org/10.2134/jeq2007.0226
+
+Carlisle, L., Montenegro de Wit, M., DeLonge, M. S., Iles, A., Calo, A., Getz, C., … Press, D. (2019). Transitioning to Sustainable Agriculture Requires Growing and Sustaining an Ecologically Skilled Workforce. Frontiers in Sustainable Food Systems, 3(November), 96. https://doi.org/10.3389/fsufs.2019.00096
+
+Carolan, M. (2017). Publicising Food: Big Data, Precision Agriculture, and Co-Experimental Techniques of Addition. Sociologia Ruralis, 57(2), 135–154. https://doi.org/10.1111/soru.12120
+
+Coleman, D. C., & Dec, N. (1989). Special Feature : Ecology , Agroecosystems , and Sustainable Agriculture. 70(6), 12–13.
+
+DeLonge, M. S., Miles, A., & Carlisle, L. (2016). Investing in the transition to sustainable agriculture. Environmental Science and Policy, 55, 266–273. https://doi.org/10.1016/j.envsci.2015.09.013
+
+Elliot, E. T., & Cole, V. (1989). A Perspective on Agroecosystem Science. Ecology, 70(6), 1597–1602.
+
+Engel, R. (2012). Volatilization losses from surface-applied urea during cold weather months. Montana State University - Dept. LRES, 1–10. https://doi.org/10.1017/CBO9781107415324.004
+
+Foley, J. A., Ramankutty, N., Brauman, K. A., Cassidy, E. S., Gerber, J. S., Johnston, M., … Zaks, D. P. M. (2011). Solutions for a cultivated planet. Nature, 478(7369), 337–342. https://doi.org/10.1038/nature10452
+
+Gliessman, S. R., & Engles, E. W. (2014). Agroecology: The Ecology of Sustainable Food Systems (3rd ed.).
+
+Gross, M. (2013). The paradoxical evolution of agriculture. CURBIO, 23(16), R667–R670. https://doi.org/10.1016/j.cub.2013.08.001
+
+John, A. A., Jones, C. A., Ewing, S. A., Sigler, W. A., Bekkerman, A., & Miller, P. R. (2017). Fallow replacement and alternative nitrogen management for reducing nitrate leaching in a semiarid region. Nutrient Cycling in Agroecosystems, 108(3), 279–296. https://doi.org/10.1007/s10705-017-9855-9
+
+Lawrence, P. G., Rew, L. J., & Maxwell, B. D. (2015a). A probabilistic Bayesian framework for progressively updating site-specific recommendations. Precision Agriculture, 16(3), 275–296. https://doi.org/10.1007/s11119-014-9375-4
+
+Lawrence, P. G., Rew, L. J., & Maxwell, B. D. (2015b). A probabilistic Bayesian framework for progressively updating site-specific recommendations. Precision Agriculture, 16(3), 275–296. https://doi.org/10.1007/s11119-014-9375-4
+
+Maxwell, B. D., & Luschei, E. C. (2005). Justification for site-specific weed management based on ecology and economics. Weed Science, 53(2), 221–227. https://doi.org/10.1614/ws-04-071r2
+
+McBratney, A., Whelan, B., Ancev, T., & Bouma, J. (2005). Future directions of precision agriculture. Precision Agriculture, 6(1), 7–23. https://doi.org/10.1007/s11119-005-0681-8
+
+Mieno, T., & Gardner, G. (2019). The Economic Evaluation of Input Use Prescription Maps: Are You Paying to Make Less Profit? Cornhusker Economics.
+
+Mueller, N. D., West, P. C., Gerber, J. S., Macdonald, G. K., Polasky, S., & Foley, J. A. (2014). A tradeoff frontier for global nitrogen use and cereal production. Environmental Research Letters, 9(5). https://doi.org/10.1088/1748-9326/9/5/054002
+
+Paul, E. A., & Robertson, G. P. (1989). Ecology and the Agricultural Sciences: A False Dichotomy? Ecology, 70(6), 1594–1597. https://doi.org/10.2307/1938091
+
+Peerlinck, A., Sheppard, J., Pastorino, J., & Maxwell, B. (2019). Optimal Design of Experiments for Precision Agriculture Using a Genetic Algorithm. 2019 IEEE Congress on Evolutionary Computation, CEC 2019 - Proceedings, 1838–1845. https://doi.org/10.1109/CEC.2019.8790267
+
+Sigler, W. A., Ewing, S. A., Jones, C. A., Payn, R. A., Brookshire, E. N. J., Klassen, J. K., … Weissmann, G. S. (2018). Connections among soil, ground, and surface water chemistries characterize nitrogen loss from an agricultural landscape in the upper Missouri River Basin. Journal of Hydrology, 556, 247–261. https://doi.org/10.1016/j.jhydrol.2017.10.018
+
+Sudduth, K. A., & Drummond, S. T. (2007). Yield editor: Software for removing errors from crop yield maps. Agronomy Journal, 99(6), 1471–1482. https://doi.org/10.2134/agronj2006.0326
+
+Sudduth, K. A., Drummond, S. T., & Myers, D. B. (2012). Yield editor 2.0: Software for automated removal of yield map errors. American Society of Agricultural and Biological Engineers Annual International Meeting 2012, ASABE 2012, 4(12), 3378–3391. https://doi.org/10.13031/2013.41893
+
+Sykuta, M. E. (2016). Big Data in Agriculture: Property Rights, Privacy and Competition in Ag Data Services. International Food and Agribusiness Management Review, 19, 57–74.
+
+Tilman, D., Balzer, C., Hill, J., & Befort, B. L. (2011). Global food demand and the sustainable intensification of agriculture. Proceedings of the National Academy of Sciences of the United States of America, 108(50), 20260–20264. https://doi.org/10.1073/pnas.1116437108
+
+Vitousek, P. M., Aber, J. D., Howarth, R. W., Likens, G. E., Matson, P. A., Schindler, D. W., … Tilman, D. G. (1997). Human alteration of the global nitrogen cycle: Sources and consequences. Ecological Applications, 7(3), 737–750. https://doi.org/10.1890/1051-0761(1997)007[0737:HAOTGN]2.0.CO;2
+
+Weiner, J. (2017). Applying plant ecological knowledge to increase agricultural sustainability. 865–870. https://doi.org/10.1111/1365-2745.12792
+
+West, P. C., Gerber, J. S., Engstrom, P. M., Mueller, N. D., Brauman, K. A., Carlson, K. M., … Siebert, S. (2014). food security and the environment. 345(6194), 1–5.
+
