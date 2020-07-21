@@ -1,9 +1,9 @@
 ---
-title: 'Analysis: sec1east'
+title: 'Analysis: sre1314'
 author: "Paul Hegedus"
 output: html_document
 ---
-This page documents the field specific analysis of 'sec1east'. This includes analysis for both years of experimentation. Data is split into training and validation datasets using 60 and 40 percent of the data, respectively. For each year, each model is fit to the response variable using backwards AIC based model selection. The final model is used to predict the response variable (yield, protein, net-return) in the validation dataset and for calculating a RMSE for each model. Each variable is then adjusted +/-10% and the response is predicted and compared to the default predictions to determine the most elastic covariates related to each response variable.
+This page documents the field specific analysis of 'sre1314'. This includes analysis for both years of experimentation. Data is split into training and validation datasets using 60 and 40 percent of the data, respectively. For each year, each model is fit to the response variable using backwards AIC based model selection. The final model is used to predict the response variable (yield, protein, net-return) in the validation dataset and for calculating a RMSE for each model. Each variable is then adjusted +/-10% and the response is predicted and compared to the default predictions to determine the most elastic covariates related to each response variable.
 
 For each final model, the AIC and RMSE are recorded in a table with the field, year, AIC, RMSE, and resposne variable. The most sensitive parameters for each model, resposne variable, and year are also recorded. These are used to asses patterns in drivers of the response variable between years in the same field and between fields in the same year, see [ESA Analysis](esa_analysis.html).
 
@@ -14,7 +14,7 @@ library(dplyr)
 source("R/importCleanSelectFuns.R")
 source("R/analysisFuns.R")
 
-field_name <- "sec1east"
+field_name <- "sre1314"
 output <- data.frame(field = rep(field_name, 6), year = NA, model = NA, 
                      response = NA, RMSE = NA, AIC = NA)
 
@@ -23,11 +23,11 @@ out_folder <- paste0("results/", field_name," /")
 field_dat <- list.files("prepped")[grepl(field_name, list.files("prepped"))]
 ```
 
-# 2019 sec1east
+# 2018 sre1314
 Analysis for the most recent year on record for the field. The section below imports the data from the specified field and year, explores the relationship between each response and as-applied N, and evaluates the correlations between covariates and responses. Depending on the correlations between parameters, covariates may be omitted. Data is centered if desired, and then 60% of the data is used for training and 40% is used for validation. 
 
 ```{r}
-year <- "2019"
+year <- "2018"
 raw_name <- field_dat[grepl(year, field_dat)]
 ```
 
@@ -498,11 +498,11 @@ data.table::fwrite(sensTable,
                           field_name, "_sensTableCent_", year))
 ```
 
-# 2017 sec1east
+# 2016 sre1314
 Analysis for the most recent year on record for the field. The section below imports the data from the specified field and year, explores the relationship between each response and as-applied N, and evaluates the correlations between covariates and responses. Depending on the correlations between parameters, covariates may be omitted. Data is centered if desired, and then 60% of the data is used for training and 40% is used for validation. 
 
 ```{r}
-year <- "2017"
+year <- "2016"
 raw_name <- field_dat[grepl(year, field_dat)]
 ```
 
@@ -569,7 +569,6 @@ An initial model is tested that uses a generalized additive model with thin plat
 Six GAM's for this field are fit, one for each response (yield, protein, and net-return), and using the raw and centered data.
 ```{r}
 modY0 <- mgcv::bam(yld ~ s(cent_aa_n, bs = "ts") + 
-                    s(cent_prev_aa_n, bs = "ts") + 
                     s(cent_aspect_rad, bs = "ts") + 
                     s(cent_slope, bs = "ts") +
                     s(cent_elev, bs = "ts") +
@@ -585,7 +584,6 @@ summary(modY0)
 
 ```{r}
 modY0_cent <- mgcv::bam(yld ~ s(cent_aa_n, bs = "ts") + 
-                    s(cent_prev_aa_n, bs = "ts") + 
                     s(cent_aspect_rad, bs = "ts") + 
                     s(cent_slope, bs = "ts") +
                     s(cent_elev, bs = "ts") +
@@ -601,7 +599,6 @@ summary(modY0_cent)
 
 ```{r}
 modP0 <- mgcv::bam(pro ~ s(cent_aa_n, bs = "ts") + 
-                    s(cent_prev_aa_n, bs = "ts") + 
                     s(cent_aspect_rad, bs = "ts") + 
                     s(cent_slope, bs = "ts") +
                     s(cent_elev, bs = "ts") +
@@ -617,7 +614,6 @@ summary(modP0)
 
 ```{r}
 modP0_cent <- mgcv::bam(pro ~ s(cent_aa_n, bs = "ts") + 
-                    s(cent_prev_aa_n, bs = "ts") + 
                     s(cent_aspect_rad, bs = "ts") + 
                     s(cent_slope, bs = "ts") +
                     s(cent_elev, bs = "ts") +
@@ -633,7 +629,6 @@ summary(modP0_cent)
 
 ```{r}
 modNR0 <- mgcv::bam(NR ~ s(cent_aa_n, bs = "ts") + 
-                    s(cent_prev_aa_n, bs = "ts") + 
                     s(cent_aspect_rad, bs = "ts") + 
                     s(cent_slope, bs = "ts") +
                     s(cent_elev, bs = "ts") +
@@ -649,7 +644,6 @@ summary(modNR0)
 
 ```{r}
 modNR0_cent <- mgcv::bam(NR ~ s(cent_aa_n, bs = "ts") + 
-                    s(cent_prev_aa_n, bs = "ts") + 
                     s(cent_aspect_rad, bs = "ts") + 
                     s(cent_slope, bs = "ts") +
                     s(cent_elev, bs = "ts") +
@@ -754,7 +748,6 @@ To take spatial autocorrelation into account, a gaussian process basis predictio
 ```{r}
 modY1 <- mgcv::bam(yld ~ s(x, y, bs = "gp", m = 2) +
                     s(cent_aa_n, bs = "ts") + 
-                    s(cent_prev_aa_n, bs = "ts") + 
                     s(cent_aspect_rad, bs = "ts") + 
                     s(cent_slope, bs = "ts") +
                     s(cent_elev, bs = "ts") +
@@ -767,7 +760,6 @@ modY1 <- mgcv::bam(yld ~ s(x, y, bs = "gp", m = 2) +
                   data = dt)
 modY1_cent <- mgcv::bam(yld ~ s(x, y, bs = "gp", m = 2) +
                     s(cent_aa_n, bs = "ts") + 
-                    s(cent_prev_aa_n, bs = "ts") + 
                     s(cent_aspect_rad, bs = "ts") + 
                     s(cent_slope, bs = "ts") +
                     s(cent_elev, bs = "ts") +
@@ -780,7 +772,6 @@ modY1_cent <- mgcv::bam(yld ~ s(x, y, bs = "gp", m = 2) +
                   data = dt)
 modP1 <- mgcv::bam(pro ~ s(x, y, bs = "gp", m = 2) +
                     s(cent_aa_n, bs = "ts") + 
-                    s(cent_prev_aa_n, bs = "ts") + 
                     s(cent_aspect_rad, bs = "ts") + 
                     s(cent_slope, bs = "ts") +
                     s(cent_elev, bs = "ts") +
@@ -793,7 +784,6 @@ modP1 <- mgcv::bam(pro ~ s(x, y, bs = "gp", m = 2) +
                   data = dt)
 modP1_cent <- mgcv::bam(pro ~ s(x, y, bs = "gp", m = 2) +
                     s(cent_aa_n, bs = "ts") + 
-                    s(cent_prev_aa_n, bs = "ts") + 
                     s(cent_aspect_rad, bs = "ts") + 
                     s(cent_slope, bs = "ts") +
                     s(cent_elev, bs = "ts") +
@@ -806,7 +796,6 @@ modP1_cent <- mgcv::bam(pro ~ s(x, y, bs = "gp", m = 2) +
                   data = dt)
 modNR1 <- mgcv::bam(NR ~ s(x, y, bs = "gp", m = 2) +
                     s(cent_aa_n, bs = "ts") + 
-                    s(cent_prev_aa_n, bs = "ts") + 
                     s(cent_aspect_rad, bs = "ts") + 
                     s(cent_slope, bs = "ts") +
                     s(cent_elev, bs = "ts") +
@@ -819,7 +808,6 @@ modNR1 <- mgcv::bam(NR ~ s(x, y, bs = "gp", m = 2) +
                   data = dt)
 modNR1_cent <- mgcv::bam(NR ~ s(x, y, bs = "gp", m = 2) +
                     s(cent_aa_n, bs = "ts") + 
-                    s(cent_prev_aa_n, bs = "ts") + 
                     s(cent_aspect_rad, bs = "ts") + 
                     s(cent_slope, bs = "ts") +
                     s(cent_elev, bs = "ts") +

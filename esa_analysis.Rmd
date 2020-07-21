@@ -1,6 +1,0 @@
----
-title: "ESA Analysis"
-author: "Paul Hegedus"
-date: "7/15/2020"
-output: html_document
----
