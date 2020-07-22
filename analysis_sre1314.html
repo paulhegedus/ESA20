@@ -1,0 +1,2360 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Paul Hegedus" />
+
+
+<title>Analysis: sre1314</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">ESA2020-Hegedus</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="introduction.html">Introduction</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Methods
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="methods.html">Overview</a>
+    </li>
+    <li>
+      <a href="data_prep.html">Data Preparation</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Field Analysis</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="analysis_sec1east.html">sec1east</a>
+        </li>
+        <li>
+          <a href="analysis_sec1west.html">sec1west</a>
+        </li>
+        <li>
+          <a href="analysis_sec35mid.html">sec35middle</a>
+        </li>
+        <li>
+          <a href="analysis_carlinwest.html">carlinwest</a>
+        </li>
+        <li>
+          <a href="analysis_henrys.html">henrys</a>
+        </li>
+        <li>
+          <a href="analysis_minnies.html">minnies</a>
+        </li>
+        <li>
+          <a href="analysis_sre910.html">sre910</a>
+        </li>
+        <li>
+          <a href="analysis_gramsmoms.html">gramsmoms</a>
+        </li>
+        <li>
+          <a href="analysis_sre1314.html">sre1314</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="resultsNdiscussion.html">Results &amp; Discussion</a>
+</li>
+<li>
+  <a href="references.html">References</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Analysis: sre1314</h1>
+<h4 class="author">Paul Hegedus</h4>
+
+</div>
+
+
+<p>This page documents the field specific analysis of ‘sre1314’. This includes analysis for both years of experimentation. Data is split into training and validation datasets using 60 and 40 percent of the data, respectively. For each year, each model is fit to the response variable using backwards AIC based model selection. The final model is used to predict the response variable (yield, protein, net-return) in the validation dataset and for calculating a RMSE for each model. Each variable is then adjusted +/-10% and the response is predicted and compared to the default predictions to determine the most elastic covariates related to each response variable.</p>
+<p>For each final model, the AIC and RMSE are recorded in a table with the field, year, AIC, RMSE, and resposne variable. The most sensitive parameters for each model, resposne variable, and year are also recorded. These are used to asses patterns in drivers of the response variable between years in the same field and between fields in the same year, see <a href="esa_analysis.html">ESA Analysis</a>.</p>
+<pre class="r"><code>library(magrittr)
+library(ggplot2)
+library(dplyr)
+source(&quot;R/importCleanSelectFuns.R&quot;)
+source(&quot;R/analysisFuns.R&quot;)
+
+field_name &lt;- &quot;sre1314&quot;
+output &lt;- data.frame(field = rep(field_name, 6), year = NA, model = NA, 
+                     response = NA, RMSE = NA, AIC = NA)
+
+
+out_folder &lt;- paste0(&quot;results/&quot;, field_name,&quot; /&quot;) 
+field_dat &lt;- list.files(&quot;prepped&quot;)[grepl(field_name, list.files(&quot;prepped&quot;))]</code></pre>
+<div id="sre1314" class="section level1">
+<h1>2018 sre1314</h1>
+<p>Analysis for the most recent year on record for the field. The section below imports the data from the specified field and year, explores the relationship between each response and as-applied N, and evaluates the correlations between covariates and responses. Depending on the correlations between parameters, covariates may be omitted. Data is centered if desired, and then 60% of the data is used for training and 40% is used for validation.</p>
+<pre class="r"><code>year &lt;- &quot;2018&quot;
+raw_name &lt;- field_dat[grepl(year, field_dat)]</code></pre>
+<div id="import-and-explore-data" class="section level2">
+<h2>Import and Explore Data</h2>
+<p>Import the specified field and year data and summarize the data. See exploratory figures for response variables plotted against each explanatory variable.</p>
+<pre class="r"><code>dat &lt;- impDat(raw_name, &quot;prepped&quot;)
+summary(dat)</code></pre>
+<pre><code>##     field                 x                y              farmer               year        prev_year   
+##  Length:7112        Min.   :445358   Min.   :5256075   Length:7112        Min.   :2018   Min.   :2016  
+##  Class :character   1st Qu.:445468   1st Qu.:5256695   Class :character   1st Qu.:2018   1st Qu.:2016  
+##  Mode  :character   Median :445558   Median :5257255   Mode  :character   Median :2018   Median :2016  
+##                     Mean   :445558   Mean   :5257256                      Mean   :2018   Mean   :2016  
+##                     3rd Qu.:445648   3rd Qu.:5257815                      3rd Qu.:2018   3rd Qu.:2016  
+##                     Max.   :445748   Max.   :5258375                      Max.   :2018   Max.   :2016  
+##                                                                                                        
+##       yld            prev_yld          aa_n         prev_aa_n       aspect_rad          slope       
+##  Min.   :  8.08   Min.   : 5.90   Min.   : 0.00   Min.   : 0.00   Min.   :0.03638   Min.   :0.0000  
+##  1st Qu.: 37.60   1st Qu.:45.79   1st Qu.:25.36   1st Qu.:25.00   1st Qu.:2.55172   1st Qu.:0.1130  
+##  Median : 49.15   Median :52.15   Median :31.83   Median :26.00   Median :4.59908   Median :1.0000  
+##  Mean   : 51.85   Mean   :51.89   Mean   :27.18   Mean   :27.31   Mean   :3.73740   Mean   :0.7447  
+##  3rd Qu.: 64.20   3rd Qu.:58.13   3rd Qu.:33.15   3rd Qu.:30.00   3rd Qu.:4.94686   3rd Qu.:1.0000  
+##  Max.   :112.82   Max.   :87.70   Max.   :84.92   Max.   :62.00   Max.   :6.26573   Max.   :2.0000  
+##                   NA&#39;s   :3205                                                                      
+##       elev           tpi            prec_cy         prec_py          gdd_cy          gdd_py    
+##  Min.   :1109   Min.   :0.3940   Min.   :124.0   Min.   :402.0   Min.   :80.50   Min.   :1413  
+##  1st Qu.:1112   1st Qu.:0.4929   1st Qu.:125.0   1st Qu.:403.0   1st Qu.:82.75   1st Qu.:1424  
+##  Median :1114   Median :0.4990   Median :125.0   Median :403.0   Median :82.75   Median :1426  
+##  Mean   :1113   Mean   :0.4990   Mean   :124.8   Mean   :403.1   Mean   :82.75   Mean   :1425  
+##  3rd Qu.:1115   3rd Qu.:0.5058   3rd Qu.:125.0   3rd Qu.:404.0   3rd Qu.:83.25   3rd Qu.:1426  
+##  Max.   :1117   Max.   :0.5703   Max.   :125.0   Max.   :405.0   Max.   :83.25   Max.   :1427  
+##                                                                                                
+##      veg_cy            veg_py          veg_2py             X                Y                pro       
+##  Min.   :0.09334   Min.   :0.4421   Min.   :0.2502   Min.   :445358   Min.   :5256075   Min.   : 6.39  
+##  1st Qu.:0.11936   1st Qu.:0.6639   1st Qu.:0.2790   1st Qu.:445468   1st Qu.:5256695   1st Qu.:10.52  
+##  Median :0.12569   Median :0.6988   Median :0.3912   Median :445558   Median :5257255   Median :10.90  
+##  Mean   :0.12609   Mean   :0.6984   Mean   :0.3769   Mean   :445558   Mean   :5257256   Mean   :10.88  
+##  3rd Qu.:0.13194   3rd Qu.:0.7401   3rd Qu.:0.4656   3rd Qu.:445648   3rd Qu.:5257815   3rd Qu.:11.18  
+##  Max.   :0.19634   Max.   :0.8219   Max.   :0.5864   Max.   :445748   Max.   :5258375   Max.   :16.08  
+##                                                                                                        
+##        NR        
+##  Min.   :-43.48  
+##  1st Qu.:115.08  
+##  Median :177.00  
+##  Mean   :192.63  
+##  3rd Qu.:259.07  
+##  Max.   :554.18  
+## </code></pre>
+<p>Before looking at correlations, parameters with singular gradients are assessed and removed. At this point, the duplicate X and Y columns are removed.</p>
+<pre class="r"><code>zv &lt;- apply(dat, 2, function(x) length(unique(x)) == 1)
+dat &lt;- as.data.frame(dat)[, !zv] #(suppose df is the name of your dataset)
+dat &lt;- dat[, -grep(&quot;X|Y&quot;, names(dat))]</code></pre>
+<p>Now, explore correlations between variables within the dataset to assess any potential covariance issues between variables in analysis. A level of 0.7 is used as a threshold in which to remove a variable due to multicollinearity.</p>
+<pre class="r"><code>cor_mat &lt;- dat %&gt;%
+  as.matrix() %&gt;% 
+  cor(use = &quot;pairwise.complete.obs&quot;) %&gt;%
+  round(2)
+psych::cor.plot(cor_mat, main=paste0(field_name,&quot; Correlation Matrix&quot;), upper=F)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Remove any covariates if necessary.</p>
+<p>By default, all of the covariate data except latitude and longitude are centered to decrease the difference in magnitude between the scales of variables (i.e NDVI = 0 - 1, elev = 1500 - 2000). The response variables are also centered so that the variance from the mean is modeled. This allows inference on covariate influence on the variance of the responses around the mean.</p>
+<pre class="r"><code>dfc &lt;- dat %&gt;% dplyr::select(-c(&quot;x&quot;, &quot;y&quot;))
+for (i in 1:ncol(dfc)) {
+  dfc[, i] &lt;- dfc[, i] - mean(dfc[, i], na.rm = T)
+}
+names(dfc) &lt;- paste0(&quot;cent_&quot;, names(dfc))
+dat &lt;- cbind(dat, dfc)
+rm(dfc) # save space in mem</code></pre>
+<p>The last step before analysis is to split the data into training and validation datasets. 60% of the data is used for training models, while the validation dataset is reserved for assessing the ability of the final model to predict actual values.</p>
+<pre class="r"><code>set.seed(1234)
+dat_list &lt;- dualSplit(dat, 0.6)
+dt &lt;- dat_list$trn
+dv &lt;- dat_list$val
+rm(dat_list) # save space in mem</code></pre>
+</div>
+<div id="generalized-additive-model" class="section level2">
+<h2>Generalized Additive Model</h2>
+<p>An initial model is tested that uses a generalized additive model with thin plate shrinkage splines. This combines the model fitting and selection process by allowing the estimated degrees of freedom for coefficients to shrink to zero if that parameter does not have an influence on the response.</p>
+<div id="fit-models" class="section level4">
+<h4>Fit Models</h4>
+<p>Six GAM’s for this field are fit, one for each response (yield, protein, and net-return), and using the raw and centered data.</p>
+<pre class="r"><code>modY0 &lt;- mgcv::bam(yld ~ s(aa_n, bs = &quot;ts&quot;) + 
+                    s(prev_aa_n, bs = &quot;ts&quot;) + 
+                    s(aspect_rad, bs = &quot;ts&quot;) + 
+                    s(slope, bs = &quot;ts&quot;) +
+                    s(elev, bs = &quot;ts&quot;) +
+                    s(tpi, bs = &quot;ts&quot;) +
+                    s(prec_py, bs = &quot;ts&quot;) +
+                    s(gdd_py, k = 1, bs = &quot;ts&quot;) + 
+                    s(veg_cy, bs = &quot;ts&quot;) +
+                    s(veg_py, bs = &quot;ts&quot;) +
+                    s(veg_2py, bs = &quot;ts&quot;),
+                  data = dt)</code></pre>
+<pre><code>## Warning in smooth.construct.tp.smooth.spec(object, data, knots): basis dimension, k, increased to minimum possible</code></pre>
+<pre class="r"><code>summary(modY0)</code></pre>
+<pre><code>## 
+## Family: gaussian 
+## Link function: identity 
+## 
+## Formula:
+## yld ~ s(aa_n, bs = &quot;ts&quot;) + s(prev_aa_n, bs = &quot;ts&quot;) + s(aspect_rad, 
+##     bs = &quot;ts&quot;) + s(slope, bs = &quot;ts&quot;) + s(elev, bs = &quot;ts&quot;) + s(tpi, 
+##     bs = &quot;ts&quot;) + s(prec_py, bs = &quot;ts&quot;) + s(gdd_py, k = 1, bs = &quot;ts&quot;) + 
+##     s(veg_cy, bs = &quot;ts&quot;) + s(veg_py, bs = &quot;ts&quot;) + s(veg_2py, 
+##     bs = &quot;ts&quot;)
+## 
+## Parametric coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  51.8667     0.2084   248.9   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Approximate significance of smooth terms:
+##                     edf Ref.df      F  p-value    
+## s(aa_n)       2.812e+00      9  8.097  &lt; 2e-16 ***
+## s(prev_aa_n)  3.835e+00      9  3.364 5.13e-07 ***
+## s(aspect_rad) 7.745e+00      9 10.621  &lt; 2e-16 ***
+## s(slope)      1.389e+00      9  7.072  &lt; 2e-16 ***
+## s(elev)       5.751e+00      9 15.762  &lt; 2e-16 ***
+## s(tpi)        3.518e-05      9  0.000 0.829783    
+## s(prec_py)    3.216e+00      9 25.877  &lt; 2e-16 ***
+## s(gdd_py)     9.173e-01      2  5.341 1.68e-06 ***
+## s(veg_cy)     9.436e-01      9  1.207 0.000519 ***
+## s(veg_py)     6.697e+00      9 68.024  &lt; 2e-16 ***
+## s(veg_2py)    8.531e+00      9 29.833  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## R-sq.(adj) =  0.452   Deviance explained = 45.7%
+## fREML =  17291  Scale est. = 185.32    n = 4267</code></pre>
+<pre class="r"><code>modY0_cent &lt;- mgcv::bam(yld ~ s(cent_aa_n, bs = &quot;ts&quot;) + 
+                    s(cent_prev_aa_n, bs = &quot;ts&quot;) + 
+                    s(cent_aspect_rad, bs = &quot;ts&quot;) + 
+                    s(cent_slope, bs = &quot;ts&quot;) +
+                    s(cent_elev, bs = &quot;ts&quot;) +
+                    s(cent_tpi, bs = &quot;ts&quot;) +
+                    s(cent_prec_py, bs = &quot;ts&quot;) +
+                    s(cent_gdd_py, k = 1, bs = &quot;ts&quot;) + 
+                    s(cent_veg_cy, bs = &quot;ts&quot;) +
+                    s(cent_veg_py, bs = &quot;ts&quot;) +
+                    s(cent_veg_2py, bs = &quot;ts&quot;),
+                  data = dt)</code></pre>
+<pre><code>## Warning in smooth.construct.tp.smooth.spec(object, data, knots): basis dimension, k, increased to minimum possible</code></pre>
+<pre class="r"><code>summary(modY0_cent)</code></pre>
+<pre><code>## 
+## Family: gaussian 
+## Link function: identity 
+## 
+## Formula:
+## yld ~ s(cent_aa_n, bs = &quot;ts&quot;) + s(cent_prev_aa_n, bs = &quot;ts&quot;) + 
+##     s(cent_aspect_rad, bs = &quot;ts&quot;) + s(cent_slope, bs = &quot;ts&quot;) + 
+##     s(cent_elev, bs = &quot;ts&quot;) + s(cent_tpi, bs = &quot;ts&quot;) + s(cent_prec_py, 
+##     bs = &quot;ts&quot;) + s(cent_gdd_py, k = 1, bs = &quot;ts&quot;) + s(cent_veg_cy, 
+##     bs = &quot;ts&quot;) + s(cent_veg_py, bs = &quot;ts&quot;) + s(cent_veg_2py, 
+##     bs = &quot;ts&quot;)
+## 
+## Parametric coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  51.8667     0.2084   248.9   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Approximate significance of smooth terms:
+##                          edf Ref.df      F  p-value    
+## s(cent_aa_n)       2.812e+00      9  8.097  &lt; 2e-16 ***
+## s(cent_prev_aa_n)  3.835e+00      9  3.364 5.13e-07 ***
+## s(cent_aspect_rad) 7.745e+00      9 10.621  &lt; 2e-16 ***
+## s(cent_slope)      1.389e+00      9  7.072  &lt; 2e-16 ***
+## s(cent_elev)       5.751e+00      9 15.762  &lt; 2e-16 ***
+## s(cent_tpi)        3.518e-05      9  0.000 0.829783    
+## s(cent_prec_py)    3.216e+00      9 25.877  &lt; 2e-16 ***
+## s(cent_gdd_py)     9.173e-01      2  5.341 1.68e-06 ***
+## s(cent_veg_cy)     9.436e-01      9  1.207 0.000519 ***
+## s(cent_veg_py)     6.697e+00      9 68.024  &lt; 2e-16 ***
+## s(cent_veg_2py)    8.531e+00      9 29.833  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## R-sq.(adj) =  0.452   Deviance explained = 45.7%
+## fREML =  17291  Scale est. = 185.32    n = 4267</code></pre>
+<pre class="r"><code>modP0 &lt;- mgcv::bam(pro ~ s(aa_n, bs = &quot;ts&quot;) + 
+                    s(prev_aa_n, bs = &quot;ts&quot;) + 
+                    s(aspect_rad, bs = &quot;ts&quot;) + 
+                    s(slope, bs = &quot;ts&quot;) +
+                    s(elev, bs = &quot;ts&quot;) +
+                    s(tpi, bs = &quot;ts&quot;) +
+                    s(prec_py, bs = &quot;ts&quot;) +
+                    s(gdd_py, k = 1, bs = &quot;ts&quot;) + 
+                    s(veg_cy, bs = &quot;ts&quot;) +
+                    s(veg_py, bs = &quot;ts&quot;) +
+                    s(veg_2py, bs = &quot;ts&quot;),
+                  data = dt)</code></pre>
+<pre><code>## Warning in smooth.construct.tp.smooth.spec(object, data, knots): basis dimension, k, increased to minimum possible</code></pre>
+<pre class="r"><code>summary(modP0)</code></pre>
+<pre><code>## 
+## Family: gaussian 
+## Link function: identity 
+## 
+## Formula:
+## pro ~ s(aa_n, bs = &quot;ts&quot;) + s(prev_aa_n, bs = &quot;ts&quot;) + s(aspect_rad, 
+##     bs = &quot;ts&quot;) + s(slope, bs = &quot;ts&quot;) + s(elev, bs = &quot;ts&quot;) + s(tpi, 
+##     bs = &quot;ts&quot;) + s(prec_py, bs = &quot;ts&quot;) + s(gdd_py, k = 1, bs = &quot;ts&quot;) + 
+##     s(veg_cy, bs = &quot;ts&quot;) + s(veg_py, bs = &quot;ts&quot;) + s(veg_2py, 
+##     bs = &quot;ts&quot;)
+## 
+## Parametric coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 10.878516   0.008793    1237   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Approximate significance of smooth terms:
+##                     edf Ref.df      F  p-value    
+## s(aa_n)       2.860e+00      9  4.635 2.65e-10 ***
+## s(prev_aa_n)  3.157e+00      9  1.151   0.0107 *  
+## s(aspect_rad) 8.713e+00      9 20.195  &lt; 2e-16 ***
+## s(slope)      6.269e+00      9 12.290  &lt; 2e-16 ***
+## s(elev)       8.723e+00      9 48.372  &lt; 2e-16 ***
+## s(tpi)        2.283e+00      9  0.687   0.0397 *  
+## s(prec_py)    3.127e+00      9  9.503  &lt; 2e-16 ***
+## s(gdd_py)     1.612e-05      2  0.000   0.2332    
+## s(veg_cy)     5.125e+00      9 10.818  &lt; 2e-16 ***
+## s(veg_py)     6.527e+00      9 16.816  &lt; 2e-16 ***
+## s(veg_2py)    7.634e+00      9 40.912  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## R-sq.(adj) =  0.311   Deviance explained =   32%
+## fREML = 3824.5  Scale est. = 0.3299    n = 4267</code></pre>
+<pre class="r"><code>modP0_cent &lt;- mgcv::bam(pro ~ s(cent_aa_n, bs = &quot;ts&quot;) + 
+                    s(cent_prev_aa_n, bs = &quot;ts&quot;) + 
+                    s(cent_aspect_rad, bs = &quot;ts&quot;) + 
+                    s(cent_slope, bs = &quot;ts&quot;) +
+                    s(cent_elev, bs = &quot;ts&quot;) +
+                    s(cent_tpi, bs = &quot;ts&quot;) +
+                    s(cent_prec_py, bs = &quot;ts&quot;) +
+                    s(cent_gdd_py, k = 1, bs = &quot;ts&quot;) + 
+                    s(cent_veg_cy, bs = &quot;ts&quot;) +
+                    s(cent_veg_py, bs = &quot;ts&quot;) +
+                    s(cent_veg_2py, bs = &quot;ts&quot;),
+                  data = dt)</code></pre>
+<pre><code>## Warning in smooth.construct.tp.smooth.spec(object, data, knots): basis dimension, k, increased to minimum possible</code></pre>
+<pre class="r"><code>summary(modP0_cent)</code></pre>
+<pre><code>## 
+## Family: gaussian 
+## Link function: identity 
+## 
+## Formula:
+## pro ~ s(cent_aa_n, bs = &quot;ts&quot;) + s(cent_prev_aa_n, bs = &quot;ts&quot;) + 
+##     s(cent_aspect_rad, bs = &quot;ts&quot;) + s(cent_slope, bs = &quot;ts&quot;) + 
+##     s(cent_elev, bs = &quot;ts&quot;) + s(cent_tpi, bs = &quot;ts&quot;) + s(cent_prec_py, 
+##     bs = &quot;ts&quot;) + s(cent_gdd_py, k = 1, bs = &quot;ts&quot;) + s(cent_veg_cy, 
+##     bs = &quot;ts&quot;) + s(cent_veg_py, bs = &quot;ts&quot;) + s(cent_veg_2py, 
+##     bs = &quot;ts&quot;)
+## 
+## Parametric coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 10.878516   0.008793    1237   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Approximate significance of smooth terms:
+##                          edf Ref.df      F  p-value    
+## s(cent_aa_n)       2.860e+00      9  4.635 2.65e-10 ***
+## s(cent_prev_aa_n)  3.157e+00      9  1.151   0.0107 *  
+## s(cent_aspect_rad) 8.713e+00      9 20.195  &lt; 2e-16 ***
+## s(cent_slope)      6.269e+00      9 12.290  &lt; 2e-16 ***
+## s(cent_elev)       8.723e+00      9 48.372  &lt; 2e-16 ***
+## s(cent_tpi)        2.283e+00      9  0.687   0.0397 *  
+## s(cent_prec_py)    3.127e+00      9  9.503  &lt; 2e-16 ***
+## s(cent_gdd_py)     1.612e-05      2  0.000   0.2332    
+## s(cent_veg_cy)     5.125e+00      9 10.818  &lt; 2e-16 ***
+## s(cent_veg_py)     6.527e+00      9 16.816  &lt; 2e-16 ***
+## s(cent_veg_2py)    7.634e+00      9 40.912  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## R-sq.(adj) =  0.311   Deviance explained =   32%
+## fREML = 3824.5  Scale est. = 0.3299    n = 4267</code></pre>
+<pre class="r"><code>modNR0 &lt;- mgcv::bam(NR ~ s(aa_n, bs = &quot;ts&quot;) + 
+                    s(prev_aa_n, bs = &quot;ts&quot;) + 
+                    s(aspect_rad, bs = &quot;ts&quot;) + 
+                    s(slope, bs = &quot;ts&quot;) +
+                    s(elev, bs = &quot;ts&quot;) +
+                    s(tpi, bs = &quot;ts&quot;) +
+                    s(prec_py, bs = &quot;ts&quot;) +
+                    s(gdd_py, k = 1, bs = &quot;ts&quot;) + 
+                    s(veg_cy, bs = &quot;ts&quot;) +
+                    s(veg_py, bs = &quot;ts&quot;) +
+                    s(veg_2py, bs = &quot;ts&quot;),
+                  data = dt)</code></pre>
+<pre><code>## Warning in smooth.construct.tp.smooth.spec(object, data, knots): basis dimension, k, increased to minimum possible</code></pre>
+<pre class="r"><code>summary(modNR0)</code></pre>
+<pre><code>## 
+## Family: gaussian 
+## Link function: identity 
+## 
+## Formula:
+## NR ~ s(aa_n, bs = &quot;ts&quot;) + s(prev_aa_n, bs = &quot;ts&quot;) + s(aspect_rad, 
+##     bs = &quot;ts&quot;) + s(slope, bs = &quot;ts&quot;) + s(elev, bs = &quot;ts&quot;) + s(tpi, 
+##     bs = &quot;ts&quot;) + s(prec_py, bs = &quot;ts&quot;) + s(gdd_py, k = 1, bs = &quot;ts&quot;) + 
+##     s(veg_cy, bs = &quot;ts&quot;) + s(veg_py, bs = &quot;ts&quot;) + s(veg_2py, 
+##     bs = &quot;ts&quot;)
+## 
+## Parametric coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  192.762      1.144   168.5   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Approximate significance of smooth terms:
+##                     edf Ref.df      F  p-value    
+## s(aa_n)       3.1097011      9  4.145 4.26e-09 ***
+## s(prev_aa_n)  3.2742676      9  2.560 1.24e-05 ***
+## s(aspect_rad) 8.0645531      9 13.940  &lt; 2e-16 ***
+## s(slope)      1.2468790      9  5.944 1.95e-14 ***
+## s(elev)       4.3717489      9 18.086  &lt; 2e-16 ***
+## s(tpi)        0.0002402      9  0.000   0.9326    
+## s(prec_py)    3.4971773      9 26.696  &lt; 2e-16 ***
+## s(gdd_py)     0.9201520      2  5.556 1.97e-06 ***
+## s(veg_cy)     0.7534017      9  0.328   0.0449 *  
+## s(veg_py)     6.7688676      9 77.989  &lt; 2e-16 ***
+## s(veg_2py)    8.5606701      9 31.074  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## R-sq.(adj) =  0.452   Deviance explained = 45.7%
+## fREML =  24553  Scale est. = 5581.5    n = 4267</code></pre>
+<pre class="r"><code>modNR0_cent &lt;- mgcv::bam(NR ~ s(cent_aa_n, bs = &quot;ts&quot;) + 
+                    s(cent_prev_aa_n, bs = &quot;ts&quot;) + 
+                    s(cent_aspect_rad, bs = &quot;ts&quot;) + 
+                    s(cent_slope, bs = &quot;ts&quot;) +
+                    s(cent_elev, bs = &quot;ts&quot;) +
+                    s(cent_tpi, bs = &quot;ts&quot;) +
+                    s(cent_prec_py, bs = &quot;ts&quot;) +
+                    s(cent_gdd_py, k = 1, bs = &quot;ts&quot;) + 
+                    s(cent_veg_cy, bs = &quot;ts&quot;) +
+                    s(cent_veg_py, bs = &quot;ts&quot;) +
+                    s(cent_veg_2py, bs = &quot;ts&quot;),
+                  data = dt)</code></pre>
+<pre><code>## Warning in smooth.construct.tp.smooth.spec(object, data, knots): basis dimension, k, increased to minimum possible</code></pre>
+<pre class="r"><code>summary(modNR0_cent)</code></pre>
+<pre><code>## 
+## Family: gaussian 
+## Link function: identity 
+## 
+## Formula:
+## NR ~ s(cent_aa_n, bs = &quot;ts&quot;) + s(cent_prev_aa_n, bs = &quot;ts&quot;) + 
+##     s(cent_aspect_rad, bs = &quot;ts&quot;) + s(cent_slope, bs = &quot;ts&quot;) + 
+##     s(cent_elev, bs = &quot;ts&quot;) + s(cent_tpi, bs = &quot;ts&quot;) + s(cent_prec_py, 
+##     bs = &quot;ts&quot;) + s(cent_gdd_py, k = 1, bs = &quot;ts&quot;) + s(cent_veg_cy, 
+##     bs = &quot;ts&quot;) + s(cent_veg_py, bs = &quot;ts&quot;) + s(cent_veg_2py, 
+##     bs = &quot;ts&quot;)
+## 
+## Parametric coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  192.762      1.144   168.5   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Approximate significance of smooth terms:
+##                          edf Ref.df      F  p-value    
+## s(cent_aa_n)       3.1097011      9  4.145 4.26e-09 ***
+## s(cent_prev_aa_n)  3.2742676      9  2.560 1.24e-05 ***
+## s(cent_aspect_rad) 8.0645531      9 13.940  &lt; 2e-16 ***
+## s(cent_slope)      1.2468790      9  5.944 1.95e-14 ***
+## s(cent_elev)       4.3717489      9 18.086  &lt; 2e-16 ***
+## s(cent_tpi)        0.0002402      9  0.000   0.9326    
+## s(cent_prec_py)    3.4971773      9 26.696  &lt; 2e-16 ***
+## s(cent_gdd_py)     0.9201520      2  5.556 1.97e-06 ***
+## s(cent_veg_cy)     0.7534017      9  0.328   0.0449 *  
+## s(cent_veg_py)     6.7688676      9 77.989  &lt; 2e-16 ***
+## s(cent_veg_2py)    8.5606701      9 31.074  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## R-sq.(adj) =  0.452   Deviance explained = 45.7%
+## fREML =  24553  Scale est. = 5581.5    n = 4267</code></pre>
+</div>
+<div id="check-diagnostics" class="section level4">
+<h4>Check Diagnostics</h4>
+<p>For each model fit, the diagnostics are checked to assess the assumptions of each model. These include linearity, normality of residuals, homogeneity of variance, and independence.</p>
+<p>First make a directory to save outputs.</p>
+<pre class="r"><code>cwd &lt;- paste0(&quot;results/&quot;, field_name, &quot;/diagnostics&quot;)
+if (!file.exists(cwd)) {
+  dir.create(cwd)
+}</code></pre>
+<p>Look at yield models.</p>
+<pre class="r"><code>par(mfrow=c(2,2))
+png(paste0(cwd, &quot;/yld_diagnostics.png&quot;), 
+    width = 10, 
+    height = 10,
+    units = &#39;in&#39;, 
+    res = 100)
+  par(mfrow=c(2,2))
+  mgcv::gam.check(modY0)</code></pre>
+<pre><code>## 
+## Method: fREML   Optimizer: perf newton
+## full convergence after 15 iterations.
+## Gradient range [-1.674964e-05,7.932517e-07]
+## (score 17291.31 &amp; scale 185.3177).
+## Hessian positive definite, eigenvalue range [1.674908e-05,2133.029].
+## Model rank =  93 / 93 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                     k&#39;      edf k-index p-value    
+## s(aa_n)       9.00e+00 2.81e+00    0.99   0.225    
+## s(prev_aa_n)  9.00e+00 3.83e+00    1.01   0.610    
+## s(aspect_rad) 9.00e+00 7.74e+00    0.98   0.045 *  
+## s(slope)      9.00e+00 1.39e+00    1.00   0.640    
+## s(elev)       9.00e+00 5.75e+00    0.99   0.295    
+## s(tpi)        9.00e+00 3.52e-05    1.01   0.750    
+## s(prec_py)    9.00e+00 3.22e+00    0.99   0.290    
+## s(gdd_py)     2.00e+00 9.17e-01    0.99   0.325    
+## s(veg_cy)     9.00e+00 9.44e-01    1.00   0.380    
+## s(veg_py)     9.00e+00 6.70e+00    0.98   0.100 .  
+## s(veg_2py)    9.00e+00 8.53e+00    0.67  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>dev.off()</code></pre>
+<pre><code>## png 
+##   2</code></pre>
+<pre class="r"><code>mgcv::gam.check(modY0)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<pre><code>## 
+## Method: fREML   Optimizer: perf newton
+## full convergence after 15 iterations.
+## Gradient range [-1.674964e-05,7.932517e-07]
+## (score 17291.31 &amp; scale 185.3177).
+## Hessian positive definite, eigenvalue range [1.674908e-05,2133.029].
+## Model rank =  93 / 93 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                     k&#39;      edf k-index p-value    
+## s(aa_n)       9.00e+00 2.81e+00    0.99   0.260    
+## s(prev_aa_n)  9.00e+00 3.83e+00    1.01   0.585    
+## s(aspect_rad) 9.00e+00 7.74e+00    0.98   0.055 .  
+## s(slope)      9.00e+00 1.39e+00    1.00   0.605    
+## s(elev)       9.00e+00 5.75e+00    0.99   0.275    
+## s(tpi)        9.00e+00 3.52e-05    1.01   0.775    
+## s(prec_py)    9.00e+00 3.22e+00    0.99   0.265    
+## s(gdd_py)     2.00e+00 9.17e-01    0.99   0.310    
+## s(veg_cy)     9.00e+00 9.44e-01    1.00   0.520    
+## s(veg_py)     9.00e+00 6.70e+00    0.98   0.145    
+## s(veg_2py)    9.00e+00 8.53e+00    0.67  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>png(paste0(cwd, &quot;/yld_cent_diagnostics.png&quot;), 
+    width = 10, 
+    height = 10,
+    units = &#39;in&#39;, 
+    res = 100)
+  par(mfrow=c(2,2))
+  mgcv::gam.check(modY0_cent)</code></pre>
+<pre><code>## 
+## Method: fREML   Optimizer: perf newton
+## full convergence after 15 iterations.
+## Gradient range [-1.674964e-05,7.932513e-07]
+## (score 17291.31 &amp; scale 185.3177).
+## Hessian positive definite, eigenvalue range [1.674908e-05,2133.029].
+## Model rank =  93 / 93 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                          k&#39;      edf k-index p-value    
+## s(cent_aa_n)       9.00e+00 2.81e+00    0.99   0.190    
+## s(cent_prev_aa_n)  9.00e+00 3.83e+00    1.01   0.595    
+## s(cent_aspect_rad) 9.00e+00 7.74e+00    0.98   0.080 .  
+## s(cent_slope)      9.00e+00 1.39e+00    1.00   0.590    
+## s(cent_elev)       9.00e+00 5.75e+00    0.99   0.285    
+## s(cent_tpi)        9.00e+00 3.52e-05    1.01   0.715    
+## s(cent_prec_py)    9.00e+00 3.22e+00    0.99   0.280    
+## s(cent_gdd_py)     2.00e+00 9.17e-01    0.99   0.275    
+## s(cent_veg_cy)     9.00e+00 9.44e-01    1.00   0.485    
+## s(cent_veg_py)     9.00e+00 6.70e+00    0.98   0.085 .  
+## s(cent_veg_2py)    9.00e+00 8.53e+00    0.67  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>dev.off()</code></pre>
+<pre><code>## png 
+##   2</code></pre>
+<pre class="r"><code>mgcv::gam.check(modY0_cent)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-16-2.png" width="672" /></p>
+<pre><code>## 
+## Method: fREML   Optimizer: perf newton
+## full convergence after 15 iterations.
+## Gradient range [-1.674964e-05,7.932513e-07]
+## (score 17291.31 &amp; scale 185.3177).
+## Hessian positive definite, eigenvalue range [1.674908e-05,2133.029].
+## Model rank =  93 / 93 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                          k&#39;      edf k-index p-value    
+## s(cent_aa_n)       9.00e+00 2.81e+00    0.99   0.250    
+## s(cent_prev_aa_n)  9.00e+00 3.83e+00    1.01   0.590    
+## s(cent_aspect_rad) 9.00e+00 7.74e+00    0.98   0.045 *  
+## s(cent_slope)      9.00e+00 1.39e+00    1.00   0.650    
+## s(cent_elev)       9.00e+00 5.75e+00    0.99   0.335    
+## s(cent_tpi)        9.00e+00 3.52e-05    1.01   0.695    
+## s(cent_prec_py)    9.00e+00 3.22e+00    0.99   0.280    
+## s(cent_gdd_py)     2.00e+00 9.17e-01    0.99   0.380    
+## s(cent_veg_cy)     9.00e+00 9.44e-01    1.00   0.485    
+## s(cent_veg_py)     9.00e+00 6.70e+00    0.98   0.095 .  
+## s(cent_veg_2py)    9.00e+00 8.53e+00    0.67  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Look at protein models.</p>
+<pre class="r"><code>par(mfrow=c(2,2))
+png(paste0(cwd, &quot;/pro_diagnostics.png&quot;), 
+    width = 10, 
+    height = 10,
+    units = &#39;in&#39;, 
+    res = 100)
+  par(mfrow=c(2,2))
+  mgcv::gam.check(modP0)</code></pre>
+<pre><code>## 
+## Method: fREML   Optimizer: perf newton
+## full convergence after 12 iterations.
+## Gradient range [-2.94799e-06,2.86791e-08]
+## (score 3824.492 &amp; scale 0.3298982).
+## Hessian positive definite, eigenvalue range [2.948001e-06,2133.041].
+## Model rank =  93 / 93 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                     k&#39;      edf k-index p-value    
+## s(aa_n)       9.00e+00 2.86e+00    0.99   0.340    
+## s(prev_aa_n)  9.00e+00 3.16e+00    1.01   0.715    
+## s(aspect_rad) 9.00e+00 8.71e+00    0.93  &lt;2e-16 ***
+## s(slope)      9.00e+00 6.27e+00    0.96  &lt;2e-16 ***
+## s(elev)       9.00e+00 8.72e+00    1.01   0.645    
+## s(tpi)        9.00e+00 2.28e+00    0.99   0.340    
+## s(prec_py)    9.00e+00 3.13e+00    0.97   0.015 *  
+## s(gdd_py)     2.00e+00 1.61e-05    0.98   0.045 *  
+## s(veg_cy)     9.00e+00 5.13e+00    1.04   0.995    
+## s(veg_py)     9.00e+00 6.53e+00    0.99   0.280    
+## s(veg_2py)    9.00e+00 7.63e+00    0.76  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>dev.off()</code></pre>
+<pre><code>## png 
+##   2</code></pre>
+<pre class="r"><code>mgcv::gam.check(modP0)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<pre><code>## 
+## Method: fREML   Optimizer: perf newton
+## full convergence after 12 iterations.
+## Gradient range [-2.94799e-06,2.86791e-08]
+## (score 3824.492 &amp; scale 0.3298982).
+## Hessian positive definite, eigenvalue range [2.948001e-06,2133.041].
+## Model rank =  93 / 93 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                     k&#39;      edf k-index p-value    
+## s(aa_n)       9.00e+00 2.86e+00    0.99   0.330    
+## s(prev_aa_n)  9.00e+00 3.16e+00    1.01   0.770    
+## s(aspect_rad) 9.00e+00 8.71e+00    0.93  &lt;2e-16 ***
+## s(slope)      9.00e+00 6.27e+00    0.96   0.010 ** 
+## s(elev)       9.00e+00 8.72e+00    1.01   0.640    
+## s(tpi)        9.00e+00 2.28e+00    0.99   0.355    
+## s(prec_py)    9.00e+00 3.13e+00    0.97   0.015 *  
+## s(gdd_py)     2.00e+00 1.61e-05    0.98   0.045 *  
+## s(veg_cy)     9.00e+00 5.13e+00    1.04   0.995    
+## s(veg_py)     9.00e+00 6.53e+00    0.99   0.305    
+## s(veg_2py)    9.00e+00 7.63e+00    0.76  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>png(paste0(cwd, &quot;/pro_cent_diagnostics.png&quot;), 
+    width = 10, 
+    height = 10,
+    units = &#39;in&#39;, 
+    res = 100)
+  par(mfrow=c(2,2))
+  mgcv::gam.check(modP0_cent)</code></pre>
+<pre><code>## 
+## Method: fREML   Optimizer: perf newton
+## full convergence after 12 iterations.
+## Gradient range [-2.94799e-06,2.86791e-08]
+## (score 3824.492 &amp; scale 0.3298982).
+## Hessian positive definite, eigenvalue range [2.948001e-06,2133.041].
+## Model rank =  93 / 93 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                          k&#39;      edf k-index p-value    
+## s(cent_aa_n)       9.00e+00 2.86e+00    0.99   0.360    
+## s(cent_prev_aa_n)  9.00e+00 3.16e+00    1.01   0.740    
+## s(cent_aspect_rad) 9.00e+00 8.71e+00    0.93  &lt;2e-16 ***
+## s(cent_slope)      9.00e+00 6.27e+00    0.96  &lt;2e-16 ***
+## s(cent_elev)       9.00e+00 8.72e+00    1.01   0.660    
+## s(cent_tpi)        9.00e+00 2.28e+00    0.99   0.365    
+## s(cent_prec_py)    9.00e+00 3.13e+00    0.97   0.035 *  
+## s(cent_gdd_py)     2.00e+00 1.61e-05    0.98   0.055 .  
+## s(cent_veg_cy)     9.00e+00 5.13e+00    1.04   0.990    
+## s(cent_veg_py)     9.00e+00 6.53e+00    0.99   0.295    
+## s(cent_veg_2py)    9.00e+00 7.63e+00    0.76  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>dev.off()</code></pre>
+<pre><code>## png 
+##   2</code></pre>
+<pre class="r"><code>mgcv::gam.check(modP0_cent)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-17-2.png" width="672" /></p>
+<pre><code>## 
+## Method: fREML   Optimizer: perf newton
+## full convergence after 12 iterations.
+## Gradient range [-2.94799e-06,2.86791e-08]
+## (score 3824.492 &amp; scale 0.3298982).
+## Hessian positive definite, eigenvalue range [2.948001e-06,2133.041].
+## Model rank =  93 / 93 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                          k&#39;      edf k-index p-value    
+## s(cent_aa_n)       9.00e+00 2.86e+00    0.99   0.305    
+## s(cent_prev_aa_n)  9.00e+00 3.16e+00    1.01   0.750    
+## s(cent_aspect_rad) 9.00e+00 8.71e+00    0.93  &lt;2e-16 ***
+## s(cent_slope)      9.00e+00 6.27e+00    0.96   0.005 ** 
+## s(cent_elev)       9.00e+00 8.72e+00    1.01   0.630    
+## s(cent_tpi)        9.00e+00 2.28e+00    0.99   0.330    
+## s(cent_prec_py)    9.00e+00 3.13e+00    0.97   0.015 *  
+## s(cent_gdd_py)     2.00e+00 1.61e-05    0.98   0.035 *  
+## s(cent_veg_cy)     9.00e+00 5.13e+00    1.04   1.000    
+## s(cent_veg_py)     9.00e+00 6.53e+00    0.99   0.395    
+## s(cent_veg_2py)    9.00e+00 7.63e+00    0.76  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Look at net-return models.</p>
+<pre class="r"><code>par(mfrow=c(2,2))
+png(paste0(cwd, &quot;/NR_diagnostics.png&quot;), 
+    width = 10, 
+    height = 10,
+    units = &#39;in&#39;, 
+    res = 100)
+  par(mfrow=c(2,2))
+  mgcv::gam.check(modNR0)</code></pre>
+<pre><code>## 
+## Method: fREML   Optimizer: perf newton
+## full convergence after 14 iterations.
+## Gradient range [-0.000119025,1.21469e-06]
+## (score 24552.8 &amp; scale 5581.51).
+## Hessian positive definite, eigenvalue range [0.0001189966,2133.028].
+## Model rank =  93 / 93 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                    k&#39;     edf k-index p-value    
+## s(aa_n)       9.00000 3.10970    0.99   0.335    
+## s(prev_aa_n)  9.00000 3.27427    1.00   0.590    
+## s(aspect_rad) 9.00000 8.06455    0.98   0.050 *  
+## s(slope)      9.00000 1.24688    1.01   0.680    
+## s(elev)       9.00000 4.37175    0.99   0.350    
+## s(tpi)        9.00000 0.00024    1.01   0.840    
+## s(prec_py)    9.00000 3.49718    0.99   0.280    
+## s(gdd_py)     2.00000 0.92015    1.00   0.360    
+## s(veg_cy)     9.00000 0.75340    0.99   0.295    
+## s(veg_py)     9.00000 6.76887    0.98   0.075 .  
+## s(veg_2py)    9.00000 8.56067    0.68  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>dev.off()</code></pre>
+<pre><code>## png 
+##   2</code></pre>
+<pre class="r"><code>mgcv::gam.check(modNR0)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<pre><code>## 
+## Method: fREML   Optimizer: perf newton
+## full convergence after 14 iterations.
+## Gradient range [-0.000119025,1.21469e-06]
+## (score 24552.8 &amp; scale 5581.51).
+## Hessian positive definite, eigenvalue range [0.0001189966,2133.028].
+## Model rank =  93 / 93 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                    k&#39;     edf k-index p-value    
+## s(aa_n)       9.00000 3.10970    0.99    0.31    
+## s(prev_aa_n)  9.00000 3.27427    1.00    0.59    
+## s(aspect_rad) 9.00000 8.06455    0.98    0.05 *  
+## s(slope)      9.00000 1.24688    1.01    0.66    
+## s(elev)       9.00000 4.37175    0.99    0.34    
+## s(tpi)        9.00000 0.00024    1.01    0.84    
+## s(prec_py)    9.00000 3.49718    0.99    0.38    
+## s(gdd_py)     2.00000 0.92015    1.00    0.34    
+## s(veg_cy)     9.00000 0.75340    0.99    0.25    
+## s(veg_py)     9.00000 6.76887    0.98    0.16    
+## s(veg_2py)    9.00000 8.56067    0.68  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>png(paste0(cwd, &quot;/NR_cent_diagnostics.png&quot;), 
+    width = 10, 
+    height = 10,
+    units = &#39;in&#39;, 
+    res = 100)  
+  par(mfrow=c(2,2))
+  mgcv::gam.check(modNR0_cent)</code></pre>
+<pre><code>## 
+## Method: fREML   Optimizer: perf newton
+## full convergence after 14 iterations.
+## Gradient range [-0.000119025,1.21469e-06]
+## (score 24552.8 &amp; scale 5581.51).
+## Hessian positive definite, eigenvalue range [0.0001189966,2133.028].
+## Model rank =  93 / 93 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                         k&#39;     edf k-index p-value    
+## s(cent_aa_n)       9.00000 3.10970    0.99   0.300    
+## s(cent_prev_aa_n)  9.00000 3.27427    1.00   0.585    
+## s(cent_aspect_rad) 9.00000 8.06455    0.98   0.065 .  
+## s(cent_slope)      9.00000 1.24688    1.01   0.705    
+## s(cent_elev)       9.00000 4.37175    0.99   0.265    
+## s(cent_tpi)        9.00000 0.00024    1.01   0.880    
+## s(cent_prec_py)    9.00000 3.49718    0.99   0.340    
+## s(cent_gdd_py)     2.00000 0.92015    1.00   0.370    
+## s(cent_veg_cy)     9.00000 0.75340    0.99   0.250    
+## s(cent_veg_py)     9.00000 6.76887    0.98   0.090 .  
+## s(cent_veg_2py)    9.00000 8.56067    0.68  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>dev.off()</code></pre>
+<pre><code>## png 
+##   2</code></pre>
+<pre class="r"><code>mgcv::gam.check(modNR0_cent)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-18-2.png" width="672" /></p>
+<pre><code>## 
+## Method: fREML   Optimizer: perf newton
+## full convergence after 14 iterations.
+## Gradient range [-0.000119025,1.21469e-06]
+## (score 24552.8 &amp; scale 5581.51).
+## Hessian positive definite, eigenvalue range [0.0001189966,2133.028].
+## Model rank =  93 / 93 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                         k&#39;     edf k-index p-value    
+## s(cent_aa_n)       9.00000 3.10970    0.99    0.29    
+## s(cent_prev_aa_n)  9.00000 3.27427    1.00    0.64    
+## s(cent_aspect_rad) 9.00000 8.06455    0.98    0.08 .  
+## s(cent_slope)      9.00000 1.24688    1.01    0.66    
+## s(cent_elev)       9.00000 4.37175    0.99    0.30    
+## s(cent_tpi)        9.00000 0.00024    1.01    0.81    
+## s(cent_prec_py)    9.00000 3.49718    0.99    0.35    
+## s(cent_gdd_py)     2.00000 0.92015    1.00    0.39    
+## s(cent_veg_cy)     9.00000 0.75340    0.99    0.22    
+## s(cent_veg_py)     9.00000 6.76887    0.98    0.11    
+## s(cent_veg_2py)    9.00000 8.56067    0.68  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<div id="update-models" class="section level4">
+<h4>Update Models</h4>
+<p>Although there seems to be some heavy left tails in the normal qq-plots and violations of homogeneity of variance, we remind ourselves that the ultimate goal of these models is to make the best prediction, not necessarily the best interpretations. However, we are going to address the violation of the assumption of independence, because data closer to each other are more related than data farther apart from each other.</p>
+<p>To take spatial autocorrelation into account, a gaussian process basis prediction function is used on the product of latitude and longitude.</p>
+<pre class="r"><code>modY1 &lt;- mgcv::bam(yld ~ s(x, y, bs = &quot;gp&quot;, m = 2) +
+                    s(aa_n, bs = &quot;ts&quot;) + 
+                    s(prev_aa_n, bs = &quot;ts&quot;) + 
+                    s(aspect_rad, bs = &quot;ts&quot;) + 
+                    s(slope, bs = &quot;ts&quot;) +
+                    s(elev, bs = &quot;ts&quot;) +
+                    s(tpi, bs = &quot;ts&quot;) +
+                    s(prec_py, bs = &quot;ts&quot;) +
+                    s(gdd_py, k = 1, bs = &quot;ts&quot;) + 
+                    s(veg_cy, bs = &quot;ts&quot;) +
+                    s(veg_py, bs = &quot;ts&quot;) +
+                    s(veg_2py, bs = &quot;ts&quot;),
+                  data = dt)</code></pre>
+<pre><code>## Warning in smooth.construct.tp.smooth.spec(object, data, knots): basis dimension, k, increased to minimum possible</code></pre>
+<pre class="r"><code>modY1_cent &lt;- mgcv::bam(yld ~ s(x, y, bs = &quot;gp&quot;, m = 2) +
+                    s(cent_aa_n, bs = &quot;ts&quot;) + 
+                    s(cent_prev_aa_n, bs = &quot;ts&quot;) + 
+                    s(cent_aspect_rad, bs = &quot;ts&quot;) + 
+                    s(cent_slope, bs = &quot;ts&quot;) +
+                    s(cent_elev, bs = &quot;ts&quot;) +
+                    s(cent_tpi, bs = &quot;ts&quot;) +
+                    s(cent_prec_py, bs = &quot;ts&quot;) +
+                    s(cent_gdd_py, k = 1, bs = &quot;ts&quot;) + 
+                    s(cent_veg_cy, bs = &quot;ts&quot;) +
+                    s(cent_veg_py, bs = &quot;ts&quot;) +
+                    s(cent_veg_2py, bs = &quot;ts&quot;),
+                  data = dt)</code></pre>
+<pre><code>## Warning in smooth.construct.tp.smooth.spec(object, data, knots): basis dimension, k, increased to minimum possible</code></pre>
+<pre class="r"><code>modP1 &lt;- mgcv::bam(pro ~ s(x, y, bs = &quot;gp&quot;, m = 2) +
+                    s(aa_n, bs = &quot;ts&quot;) + 
+                    s(prev_aa_n, bs = &quot;ts&quot;) + 
+                    s(aspect_rad, bs = &quot;ts&quot;) + 
+                    s(slope, bs = &quot;ts&quot;) +
+                    s(elev, bs = &quot;ts&quot;) +
+                    s(tpi, bs = &quot;ts&quot;) +
+                    s(prec_py, bs = &quot;ts&quot;) +
+                    s(gdd_py, k = 1, bs = &quot;ts&quot;) + 
+                    s(veg_cy, bs = &quot;ts&quot;) +
+                    s(veg_py, bs = &quot;ts&quot;) +
+                    s(veg_2py, bs = &quot;ts&quot;),
+                  data = dt)</code></pre>
+<pre><code>## Warning in smooth.construct.tp.smooth.spec(object, data, knots): basis dimension, k, increased to minimum possible</code></pre>
+<pre class="r"><code>modP1_cent &lt;- mgcv::bam(pro ~ s(x, y, bs = &quot;gp&quot;, m = 2) +
+                    s(cent_aa_n, bs = &quot;ts&quot;) + 
+                    s(cent_prev_aa_n, bs = &quot;ts&quot;) + 
+                    s(cent_aspect_rad, bs = &quot;ts&quot;) + 
+                    s(cent_slope, bs = &quot;ts&quot;) +
+                    s(cent_elev, bs = &quot;ts&quot;) +
+                    s(cent_tpi, bs = &quot;ts&quot;) +
+                    s(cent_prec_py, bs = &quot;ts&quot;) +
+                    s(cent_gdd_py, k = 1, bs = &quot;ts&quot;) + 
+                    s(cent_veg_cy, bs = &quot;ts&quot;) +
+                    s(cent_veg_py, bs = &quot;ts&quot;) +
+                    s(cent_veg_2py, bs = &quot;ts&quot;),
+                  data = dt)</code></pre>
+<pre><code>## Warning in smooth.construct.tp.smooth.spec(object, data, knots): basis dimension, k, increased to minimum possible</code></pre>
+<pre class="r"><code>modNR1 &lt;- mgcv::bam(NR ~ s(x, y, bs = &quot;gp&quot;, m = 2) +
+                    s(aa_n, bs = &quot;ts&quot;) + 
+                    s(prev_aa_n, bs = &quot;ts&quot;) + 
+                    s(aspect_rad, bs = &quot;ts&quot;) + 
+                    s(slope, bs = &quot;ts&quot;) +
+                    s(elev, bs = &quot;ts&quot;) +
+                    s(tpi, bs = &quot;ts&quot;) +
+                    s(prec_py, bs = &quot;ts&quot;) +
+                    s(gdd_py, k = 1, bs = &quot;ts&quot;) + 
+                    s(veg_cy, bs = &quot;ts&quot;) +
+                    s(veg_py, bs = &quot;ts&quot;) +
+                    s(veg_2py, bs = &quot;ts&quot;),
+                  data = dt)</code></pre>
+<pre><code>## Warning in smooth.construct.tp.smooth.spec(object, data, knots): basis dimension, k, increased to minimum possible</code></pre>
+<pre class="r"><code>modNR1_cent &lt;- mgcv::bam(NR ~ s(x, y, bs = &quot;gp&quot;, m = 2) +
+                    s(cent_aa_n, bs = &quot;ts&quot;) + 
+                    s(cent_prev_aa_n, bs = &quot;ts&quot;) + 
+                    s(cent_aspect_rad, bs = &quot;ts&quot;) + 
+                    s(cent_slope, bs = &quot;ts&quot;) +
+                    s(cent_elev, bs = &quot;ts&quot;) +
+                    s(cent_tpi, bs = &quot;ts&quot;) +
+                    s(cent_prec_py, bs = &quot;ts&quot;) +
+                    s(cent_gdd_py, k = 1, bs = &quot;ts&quot;) + 
+                    s(cent_veg_cy, bs = &quot;ts&quot;) +
+                    s(cent_veg_py, bs = &quot;ts&quot;) +
+                    s(cent_veg_2py, bs = &quot;ts&quot;),
+                  data = dt)</code></pre>
+<pre><code>## Warning in smooth.construct.tp.smooth.spec(object, data, knots): basis dimension, k, increased to minimum possible</code></pre>
+</div>
+<div id="assess-models" class="section level4">
+<h4>Assess Models</h4>
+<p>To asses the predictive ability of each model, it is used to predict the response in the validation dataset. This allows us to calculate RMSE and make plots of the model fits compared to observed values.</p>
+<pre class="r"><code>dv$gam_pred_yld &lt;- predict(modY1, dv)
+dv$gam_pred_yld_cent &lt;- predict(modY1_cent, dv)
+dv$gam_pred_pro &lt;- predict(modP1, dv)
+dv$gam_pred_pro_cent &lt;- predict(modP1_cent, dv)
+dv$gam_pred_NR &lt;- predict(modNR1, dv)
+dv$gam_pred_NR_cent &lt;- predict(modNR1, dv)
+
+plotVal(dv, &quot;yld&quot;, &quot;gam_pred_yld&quot;, field_name, year, modY1, TRUE)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<pre class="r"><code>plotVal(dv, &quot;yld&quot;, &quot;gam_pred_yld_cent&quot;, field_name, year, modY1_cent, TRUE)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-20-2.png" width="672" /></p>
+<pre class="r"><code>plotVal(dv, &quot;pro&quot;, &quot;gam_pred_pro&quot;, field_name, year, modP1, TRUE)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-20-3.png" width="672" /></p>
+<pre class="r"><code>plotVal(dv, &quot;pro&quot;, &quot;gam_pred_pro_cent&quot;, field_name, year, modP1_cent, TRUE)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-20-4.png" width="672" /></p>
+<pre class="r"><code>plotVal(dv, &quot;NR&quot;, &quot;gam_pred_NR&quot;, field_name, year, modNR1, TRUE)</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).
+
+## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-20-5.png" width="672" /></p>
+<pre class="r"><code>plotVal(dv, &quot;NR&quot;, &quot;gam_pred_NR_cent&quot;, field_name, year, modNR1_cent, TRUE)</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).
+
+## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-20-6.png" width="672" /></p>
+<p>Based on the fitted values, there does not appear to be any difference between models fit with raw or centered response variables, so raw values will be assessed. Now, plot the observed vs. predcited values and calculate RMSE.</p>
+<pre class="r"><code>plotObsVPreds(dv, &quot;yld&quot;, &quot;gam_pred_yld&quot;, field_name, year, TRUE)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<pre class="r"><code>plotObsVPreds(dv, &quot;yld&quot;, &quot;gam_pred_yld_cent&quot;, field_name, year, TRUE)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-21-2.png" width="672" /></p>
+<pre class="r"><code>plotObsVPreds(dv, &quot;pro&quot;, &quot;gam_pred_pro&quot;, field_name, year, TRUE)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-21-3.png" width="672" /></p>
+<pre class="r"><code>plotObsVPreds(dv, &quot;pro&quot;, &quot;gam_pred_pro_cent&quot;, field_name, year, TRUE)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-21-4.png" width="672" /></p>
+<pre class="r"><code>plotObsVPreds(dv, &quot;NR&quot;, &quot;gam_pred_NR&quot;, field_name, year, TRUE)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-21-5.png" width="672" /></p>
+<pre class="r"><code>plotObsVPreds(dv, &quot;NR&quot;, &quot;gam_pred_NR_cent&quot;, field_name, year, TRUE)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-21-6.png" width="672" /></p>
+</div>
+<div id="save-outputs" class="section level4">
+<h4>Save Outputs</h4>
+<p>Now that each model has been fit, the RMSE and AIC of each is recorded for further analysis and comparison between years and across years. Again, because centering the responses results in the exact same model fits, it is omitted.</p>
+<pre class="r"><code>rmses &lt;- c(round(Metrics::rmse(na.omit(dv$yld), na.omit(dv$gam_pred_yld)), 4),
+           round(Metrics::rmse(na.omit(dv$pro), na.omit(dv$gam_pred_pro)), 4),
+           round(Metrics::rmse(na.omit(dv$NR), na.omit(dv$gam_pred_NR)), 4))
+aics &lt;- c(AIC(modY0), AIC(modP0), AIC(modNR0))
+forOutput &lt;- data.frame(rep(field_name, 3), rep(year, 3), rep(&quot;GAM&quot;, 3),
+                        c(&quot;Yield&quot;, &quot;Protein&quot;, &quot;Net-Return&quot;), rmses, aics)
+# EDIT
+output[1:3, ] &lt;- forOutput</code></pre>
+</div>
+<div id="sensitivity-analysis" class="section level4">
+<h4>Sensitivity Analysis</h4>
+<p>To perform the sensitivity analysis, each variable is increased or decreased by 10%. The resulting mean prediction across the field for the response is recorded and compared against the mean responses without adjustment. Sensitivity is calculated as the absolute value of the difference between the mean response of the default minus the mean response in the adjusted setting, over the mean response in the default system, divided by 0.1.</p>
+<p>Make tables to hold sensitivity analysis results.</p>
+<pre class="r"><code>covars &lt;- c(&quot;aa_n&quot;, &quot;aspect_rad&quot;, &quot;slope&quot;, &quot;elev&quot;,
+            &quot;tpi&quot;, &quot;prec_py&quot;, &quot;gdd_py&quot;, &quot;veg_cy&quot;,
+            &quot;veg_py&quot;, &quot;veg_2py&quot;)
+
+yldSensTab &lt;- matrix(0, nrow = length(covars)*2 + 1, ncol = 5) %&gt;%
+  as.data.frame()
+names(yldSensTab) &lt;- c(&quot;Parameter&quot;, &quot;Adjustment&quot;, &quot;MeanResp&quot;,
+                       &quot;Sensitivity.value&quot;,&quot;Elasticity.value&quot;)
+yldSensTab$ResponseVar &lt;- &quot;yld&quot;
+yldSensTab$Parameter &lt;- c(&quot;Defaults&quot;, rep(covars, each = 2))
+yldSensTab$Adjustment &lt;- c(NA, rep(c(&quot;10&quot;, &quot;-10&quot;), length(covars)))
+
+proSensTab &lt;- matrix(0, nrow = length(covars)*2 + 1, ncol = 5) %&gt;%
+  as.data.frame()
+names(proSensTab) &lt;- c(&quot;Parameter&quot;, &quot;Adjustment&quot;, &quot;MeanResp&quot;,
+                       &quot;Sensitivity.value&quot;,&quot;Elasticity.value&quot;)
+proSensTab$ResponseVar &lt;- &quot;pro&quot;
+proSensTab$Parameter &lt;- c(&quot;Defaults&quot;, rep(covars, each = 2))
+proSensTab$Adjustment &lt;- c(NA, rep(c(&quot;10&quot;, &quot;-10&quot;), length(covars)))
+
+
+NRSensTab &lt;- matrix(0, nrow = length(covars)*2 + 1, ncol = 5) %&gt;%
+  as.data.frame()
+names(NRSensTab) &lt;- c(&quot;Parameter&quot;, &quot;Adjustment&quot;, &quot;MeanResp&quot;,
+                       &quot;Sensitivity.value&quot;,&quot;Elasticity.value&quot;)
+NRSensTab$ResponseVar &lt;- &quot;NR&quot;
+NRSensTab$Parameter &lt;- c(&quot;Defaults&quot;, rep(covars, each = 2))
+NRSensTab$Adjustment &lt;- c(NA, rep(c(&quot;10&quot;, &quot;-10&quot;), length(covars)))</code></pre>
+<p>Run sensitivity analysis.</p>
+<pre class="r"><code>yldSensTab &lt;- sensitivity(yldSensTab, &quot;yld&quot;, dv, modY1)
+proSensTab &lt;- sensitivity(proSensTab, &quot;pro&quot;, dv, modP1)
+NRSensTab &lt;- sensitivity(NRSensTab, &quot;NR&quot;, dv, modNR1)</code></pre>
+<p>Repeat for centered data.</p>
+<pre class="r"><code>covars &lt;- c(&quot;cent_aa_n&quot;, &quot;cent_aspect_rad&quot;, &quot;cent_slope&quot;, &quot;cent_elev&quot;,
+            &quot;cent_tpi&quot;, &quot;cent_prec_py&quot;, &quot;cent_gdd_py&quot;, &quot;cent_veg_cy&quot;,
+            &quot;cent_veg_py&quot;, &quot;cent_veg_2py&quot;)
+
+centyldSensTab &lt;- matrix(0, nrow = length(covars)*2 + 1, ncol = 5) %&gt;%
+  as.data.frame()
+names(centyldSensTab) &lt;- c(&quot;Parameter&quot;, &quot;Adjustment&quot;, &quot;MeanResp&quot;,
+                       &quot;Sensitivity.value&quot;,&quot;Elasticity.value&quot;)
+centyldSensTab$ResponseVar &lt;- &quot;yld&quot;
+centyldSensTab$Parameter &lt;- c(&quot;Defaults&quot;, rep(covars, each = 2))
+centyldSensTab$Adjustment &lt;- c(NA, rep(c(&quot;10&quot;, &quot;-10&quot;), length(covars)))
+
+centproSensTab &lt;- matrix(0, nrow = length(covars)*2 + 1, ncol = 5) %&gt;%
+  as.data.frame()
+names(centproSensTab) &lt;- c(&quot;Parameter&quot;, &quot;Adjustment&quot;, &quot;MeanResp&quot;,
+                       &quot;Sensitivity.value&quot;,&quot;Elasticity.value&quot;)
+centproSensTab$ResponseVar &lt;- &quot;pro&quot;
+centproSensTab$Parameter &lt;- c(&quot;Defaults&quot;, rep(covars, each = 2))
+centproSensTab$Adjustment &lt;- c(NA, rep(c(&quot;10&quot;, &quot;-10&quot;), length(covars)))
+
+
+centNRSensTab &lt;- matrix(0, nrow = length(covars)*2 + 1, ncol = 5) %&gt;%
+  as.data.frame()
+names(centNRSensTab) &lt;- c(&quot;Parameter&quot;, &quot;Adjustment&quot;, &quot;MeanResp&quot;,
+                       &quot;Sensitivity.value&quot;,&quot;Elasticity.value&quot;)
+centNRSensTab$ResponseVar &lt;- &quot;NR&quot;
+centNRSensTab$Parameter &lt;- c(&quot;Defaults&quot;, rep(covars, each = 2))
+centNRSensTab$Adjustment &lt;- c(NA, rep(c(&quot;10&quot;, &quot;-10&quot;), length(covars)))</code></pre>
+<p>Run sensitivity analysis.</p>
+<pre class="r"><code>centyldSensTab &lt;- sensitivity(centyldSensTab, &quot;yld&quot;, dv, modY1_cent)
+centproSensTab &lt;- sensitivity(centproSensTab, &quot;pro&quot;, dv, modP1_cent)
+centNRSensTab &lt;- sensitivity(centNRSensTab, &quot;NR&quot;, dv, modNR1_cent)</code></pre>
+</div>
+<div id="save-outputs-1" class="section level4">
+<h4>Save Outputs</h4>
+<pre class="r"><code>sensTable &lt;- rbind(yldSensTab, proSensTab, NRSensTab)
+sensTable$field &lt;- field_name
+data.table::fwrite(sensTable,
+                   paste0(&quot;results/&quot;, field_name, &quot;/&quot;, 
+                          field_name, &quot;_sensTable_&quot;, year))
+sensTable &lt;- rbind(centyldSensTab, centproSensTab, centNRSensTab)
+sensTable$field &lt;- field_name
+data.table::fwrite(sensTable,
+                   paste0(&quot;results/&quot;, field_name, &quot;/&quot;, 
+                          field_name, &quot;_sensTableCent_&quot;, year))</code></pre>
+</div>
+</div>
+</div>
+<div id="sre1314-1" class="section level1">
+<h1>2016 sre1314</h1>
+<p>Analysis for the most recent year on record for the field. The section below imports the data from the specified field and year, explores the relationship between each response and as-applied N, and evaluates the correlations between covariates and responses. Depending on the correlations between parameters, covariates may be omitted. Data is centered if desired, and then 60% of the data is used for training and 40% is used for validation.</p>
+<pre class="r"><code>year &lt;- &quot;2016&quot;
+raw_name &lt;- field_dat[grepl(year, field_dat)]</code></pre>
+<div id="import-and-explore-data-1" class="section level2">
+<h2>Import and Explore Data</h2>
+<p>Import the specified field and year data and summarize the data. See exploratory figures for response variables plotted against each explanatory variable.</p>
+<pre class="r"><code>dat &lt;- impDat(raw_name, &quot;prepped&quot;)
+summary(dat)</code></pre>
+<pre><code>##     field                 x                y              farmer               year        prev_year   
+##  Length:5439        Min.   :445338   Min.   :5256045   Length:5439        Min.   :2016   Min.   :2014  
+##  Class :character   1st Qu.:445438   1st Qu.:5256675   Class :character   1st Qu.:2016   1st Qu.:2014  
+##  Mode  :character   Median :445538   Median :5257245   Mode  :character   Median :2016   Median :2014  
+##                     Mean   :445542   Mean   :5257244                      Mean   :2016   Mean   :2014  
+##                     3rd Qu.:445648   3rd Qu.:5257815                      3rd Qu.:2016   3rd Qu.:2014  
+##                     Max.   :445768   Max.   :5258395                      Max.   :2016   Max.   :2014  
+##       yld        prev_yld            aa_n       prev_aa_n        aspect_rad          slope        
+##  Min.   : 5.10   Mode:logical   Min.   : 0.00   Mode:logical   Min.   :0.03638   Min.   :0.00000  
+##  1st Qu.:44.92   NA&#39;s:5439      1st Qu.: 0.00   NA&#39;s:5439      1st Qu.:2.70086   1st Qu.:0.06305  
+##  Median :51.70                  Median :25.00                  Median :4.60300   Median :1.00000  
+##  Mean   :51.22                  Mean   :19.62                  Mean   :3.80861   Mean   :0.73182  
+##  3rd Qu.:57.78                  3rd Qu.:27.00                  3rd Qu.:4.99114   3rd Qu.:1.00000  
+##  Max.   :89.88                  Max.   :62.00                  Max.   :6.26060   Max.   :2.00000  
+##       elev           tpi            prec_cy         prec_py          gdd_cy          gdd_py         veg_cy      
+##  Min.   :1108   Min.   :0.3940   Min.   :78.00   Min.   :398.0   Min.   :656.0   Min.   :1140   Min.   :0.1719  
+##  1st Qu.:1112   1st Qu.:0.4933   1st Qu.:78.00   1st Qu.:400.0   1st Qu.:669.5   1st Qu.:1151   1st Qu.:0.2606  
+##  Median :1114   Median :0.4991   Median :79.00   Median :400.0   Median :669.5   Median :1151   Median :0.3058  
+##  Mean   :1113   Mean   :0.4991   Mean   :78.87   Mean   :401.3   Mean   :669.4   Mean   :1151   Mean   :0.2929  
+##  3rd Qu.:1115   3rd Qu.:0.5059   3rd Qu.:79.00   3rd Qu.:405.0   3rd Qu.:670.0   3rd Qu.:1151   3rd Qu.:0.3246  
+##  Max.   :1117   Max.   :0.5850   Max.   :80.00   Max.   :405.0   Max.   :670.0   Max.   :1152   Max.   :0.3584  
+##      veg_py          veg_2py             X                Y                pro              NR        
+##  Min.   :0.2539   Min.   :0.3721   Min.   :445338   Min.   :5256045   Min.   :11.62   Min.   :-51.49  
+##  1st Qu.:0.3238   1st Qu.:0.6411   1st Qu.:445438   1st Qu.:5256675   1st Qu.:12.43   1st Qu.:191.11  
+##  Median :0.3661   Median :0.7188   Median :445538   Median :5257245   Median :13.22   Median :238.17  
+##  Mean   :0.3681   Mean   :0.6954   Mean   :445542   Mean   :5257244   Mean   :13.30   Mean   :236.42  
+##  3rd Qu.:0.4063   3rd Qu.:0.7628   3rd Qu.:445648   3rd Qu.:5257815   3rd Qu.:13.95   3rd Qu.:280.77  
+##  Max.   :0.5177   Max.   :0.8365   Max.   :445768   Max.   :5258395   Max.   :18.57   Max.   :495.80</code></pre>
+<p>Before looking at correlations, parameters with singular gradients are assessed and removed. At this point, the duplicate X and Y columns are removed.</p>
+<pre class="r"><code>zv &lt;- apply(dat, 2, function(x) length(unique(x)) == 1)
+dat &lt;- as.data.frame(dat)[, !zv] #(suppose df is the name of your dataset)
+dat &lt;- dat[, -grep(&quot;X|Y&quot;, names(dat))]</code></pre>
+<p>Now, explore correlations between variables within the dataset to assess any potential covariance issues between variables in analysis. A level of 0.7 is used as a threshold in which to remove a variable due to multicollinearity.</p>
+<pre class="r"><code>cor_mat &lt;- dat %&gt;%
+  as.matrix() %&gt;% 
+  cor(use = &quot;pairwise.complete.obs&quot;) %&gt;%
+  round(2)
+psych::cor.plot(cor_mat, main=paste0(field_name,&quot; Correlation Matrix&quot;), upper=F)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p>Remove any covariates if necessary.</p>
+<p>By default, all of the covariate data except latitude and longitude are centered to decrease the difference in magnitude between the scales of variables (i.e NDVI = 0 - 1, elev = 1500 - 2000). The response variables are also centered so that the variance from the mean is modeled. This allows inference on covariate influence on the variance of the responses around the mean.</p>
+<pre class="r"><code>dfc &lt;- dat %&gt;% dplyr::select(-c(&quot;x&quot;, &quot;y&quot;))
+for (i in 1:ncol(dfc)) {
+  dfc[, i] &lt;- dfc[, i] - mean(dfc[, i], na.rm = T)
+}
+names(dfc) &lt;- paste0(&quot;cent_&quot;, names(dfc))
+dat &lt;- cbind(dat, dfc)
+rm(dfc) # save space in mem</code></pre>
+<p>The last step before analysis is to split the data into training and validation datasets. 60% of the data is used for training models, while the validation dataset is reserved for assessing the ability of the final model to predict actual values.</p>
+<pre class="r"><code>dat_list &lt;- dualSplit(dat, 0.6)
+dt &lt;- dat_list$trn
+dv &lt;- dat_list$val
+rm(dat_list) # save space in mem</code></pre>
+</div>
+<div id="generalized-additive-model-1" class="section level2">
+<h2>Generalized Additive Model</h2>
+<p>An initial model is tested that uses a generalized additive model with thin plate shrinkage splines. This combines the model fitting and selection process by allowing the estimated degrees of freedom for coefficients to shrink to zero if that parameter does not have an influence on the response.</p>
+<div id="fit-models-1" class="section level4">
+<h4>Fit Models</h4>
+<p>Six GAM’s for this field are fit, one for each response (yield, protein, and net-return), and using the raw and centered data.</p>
+<pre class="r"><code>modY0 &lt;- mgcv::bam(yld ~ s(cent_aa_n, bs = &quot;ts&quot;) + 
+                    s(cent_aspect_rad, bs = &quot;ts&quot;) + 
+                    s(cent_slope, bs = &quot;ts&quot;) +
+                    s(cent_elev, bs = &quot;ts&quot;) +
+                    s(cent_tpi, bs = &quot;ts&quot;) +
+                    s(cent_prec_py, bs = &quot;ts&quot;) +
+                    s(cent_gdd_py, k = 1, bs = &quot;ts&quot;) + 
+                    s(cent_veg_cy, bs = &quot;ts&quot;) +
+                    s(cent_veg_py, bs = &quot;ts&quot;) +
+                    s(cent_veg_2py, bs = &quot;ts&quot;),
+                  data = dt)</code></pre>
+<pre><code>## Warning in smooth.construct.tp.smooth.spec(object, data, knots): basis dimension, k, increased to minimum possible</code></pre>
+<pre class="r"><code>summary(modY0)</code></pre>
+<pre><code>## 
+## Family: gaussian 
+## Link function: identity 
+## 
+## Formula:
+## yld ~ s(cent_aa_n, bs = &quot;ts&quot;) + s(cent_aspect_rad, bs = &quot;ts&quot;) + 
+##     s(cent_slope, bs = &quot;ts&quot;) + s(cent_elev, bs = &quot;ts&quot;) + s(cent_tpi, 
+##     bs = &quot;ts&quot;) + s(cent_prec_py, bs = &quot;ts&quot;) + s(cent_gdd_py, 
+##     k = 1, bs = &quot;ts&quot;) + s(cent_veg_cy, bs = &quot;ts&quot;) + s(cent_veg_py, 
+##     bs = &quot;ts&quot;) + s(cent_veg_2py, bs = &quot;ts&quot;)
+## 
+## Parametric coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  51.3308     0.1524   336.9   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Approximate significance of smooth terms:
+##                       edf Ref.df      F  p-value    
+## s(cent_aa_n)       0.8841      9  0.740  0.00536 ** 
+## s(cent_aspect_rad) 5.1973      9  4.070 6.78e-08 ***
+## s(cent_slope)      1.3771      9  4.846 4.88e-12 ***
+## s(cent_elev)       7.9311      9 16.271  &lt; 2e-16 ***
+## s(cent_tpi)        0.8696      9  0.682  0.00735 ** 
+## s(cent_prec_py)    3.1368      9 11.742  &lt; 2e-16 ***
+## s(cent_gdd_py)     0.5336      2  0.572  0.08897 .  
+## s(cent_veg_cy)     4.9477      9  6.983 1.75e-14 ***
+## s(cent_veg_py)     6.8940      9 20.393  &lt; 2e-16 ***
+## s(cent_veg_2py)    5.3969      9  4.809 2.39e-09 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## R-sq.(adj) =  0.281   Deviance explained = 28.9%
+## fREML =  11770  Scale est. = 75.769    n = 3263</code></pre>
+<pre class="r"><code>modY0_cent &lt;- mgcv::bam(yld ~ s(cent_aa_n, bs = &quot;ts&quot;) + 
+                    s(cent_aspect_rad, bs = &quot;ts&quot;) + 
+                    s(cent_slope, bs = &quot;ts&quot;) +
+                    s(cent_elev, bs = &quot;ts&quot;) +
+                    s(cent_tpi, bs = &quot;ts&quot;) +
+                    s(cent_prec_py, bs = &quot;ts&quot;) +
+                    s(cent_gdd_py, k = 1, bs = &quot;ts&quot;) + 
+                    s(cent_veg_cy, bs = &quot;ts&quot;) +
+                    s(cent_veg_py, bs = &quot;ts&quot;) +
+                    s(cent_veg_2py, bs = &quot;ts&quot;),
+                  data = dt)</code></pre>
+<pre><code>## Warning in smooth.construct.tp.smooth.spec(object, data, knots): basis dimension, k, increased to minimum possible</code></pre>
+<pre class="r"><code>summary(modY0_cent)</code></pre>
+<pre><code>## 
+## Family: gaussian 
+## Link function: identity 
+## 
+## Formula:
+## yld ~ s(cent_aa_n, bs = &quot;ts&quot;) + s(cent_aspect_rad, bs = &quot;ts&quot;) + 
+##     s(cent_slope, bs = &quot;ts&quot;) + s(cent_elev, bs = &quot;ts&quot;) + s(cent_tpi, 
+##     bs = &quot;ts&quot;) + s(cent_prec_py, bs = &quot;ts&quot;) + s(cent_gdd_py, 
+##     k = 1, bs = &quot;ts&quot;) + s(cent_veg_cy, bs = &quot;ts&quot;) + s(cent_veg_py, 
+##     bs = &quot;ts&quot;) + s(cent_veg_2py, bs = &quot;ts&quot;)
+## 
+## Parametric coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  51.3308     0.1524   336.9   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Approximate significance of smooth terms:
+##                       edf Ref.df      F  p-value    
+## s(cent_aa_n)       0.8841      9  0.740  0.00536 ** 
+## s(cent_aspect_rad) 5.1973      9  4.070 6.78e-08 ***
+## s(cent_slope)      1.3771      9  4.846 4.88e-12 ***
+## s(cent_elev)       7.9311      9 16.271  &lt; 2e-16 ***
+## s(cent_tpi)        0.8696      9  0.682  0.00735 ** 
+## s(cent_prec_py)    3.1368      9 11.742  &lt; 2e-16 ***
+## s(cent_gdd_py)     0.5336      2  0.572  0.08897 .  
+## s(cent_veg_cy)     4.9477      9  6.983 1.75e-14 ***
+## s(cent_veg_py)     6.8940      9 20.393  &lt; 2e-16 ***
+## s(cent_veg_2py)    5.3969      9  4.809 2.39e-09 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## R-sq.(adj) =  0.281   Deviance explained = 28.9%
+## fREML =  11770  Scale est. = 75.769    n = 3263</code></pre>
+<pre class="r"><code>modP0 &lt;- mgcv::bam(pro ~ s(cent_aa_n, bs = &quot;ts&quot;) + 
+                    s(cent_aspect_rad, bs = &quot;ts&quot;) + 
+                    s(cent_slope, bs = &quot;ts&quot;) +
+                    s(cent_elev, bs = &quot;ts&quot;) +
+                    s(cent_tpi, bs = &quot;ts&quot;) +
+                    s(cent_prec_py, bs = &quot;ts&quot;) +
+                    s(cent_gdd_py, k = 1, bs = &quot;ts&quot;) + 
+                    s(cent_veg_cy, bs = &quot;ts&quot;) +
+                    s(cent_veg_py, bs = &quot;ts&quot;) +
+                    s(cent_veg_2py, bs = &quot;ts&quot;),
+                  data = dt)</code></pre>
+<pre><code>## Warning in smooth.construct.tp.smooth.spec(object, data, knots): basis dimension, k, increased to minimum possible</code></pre>
+<pre class="r"><code>summary(modP0)</code></pre>
+<pre><code>## 
+## Family: gaussian 
+## Link function: identity 
+## 
+## Formula:
+## pro ~ s(cent_aa_n, bs = &quot;ts&quot;) + s(cent_aspect_rad, bs = &quot;ts&quot;) + 
+##     s(cent_slope, bs = &quot;ts&quot;) + s(cent_elev, bs = &quot;ts&quot;) + s(cent_tpi, 
+##     bs = &quot;ts&quot;) + s(cent_prec_py, bs = &quot;ts&quot;) + s(cent_gdd_py, 
+##     k = 1, bs = &quot;ts&quot;) + s(cent_veg_cy, bs = &quot;ts&quot;) + s(cent_veg_py, 
+##     bs = &quot;ts&quot;) + s(cent_veg_2py, bs = &quot;ts&quot;)
+## 
+## Parametric coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 13.31231    0.01062    1253   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Approximate significance of smooth terms:
+##                       edf Ref.df      F  p-value    
+## s(cent_aa_n)       2.4580      9  2.421 1.11e-05 ***
+## s(cent_aspect_rad) 8.5948      9 51.879  &lt; 2e-16 ***
+## s(cent_slope)      3.2519      9  2.112 0.000147 ***
+## s(cent_elev)       8.0607      9 49.847  &lt; 2e-16 ***
+## s(cent_tpi)        0.7716      9  0.364 0.038186 *  
+## s(cent_prec_py)    1.1911      9  3.453 5.62e-09 ***
+## s(cent_gdd_py)     1.0179      2 63.279  &lt; 2e-16 ***
+## s(cent_veg_cy)     8.2062      9 26.082  &lt; 2e-16 ***
+## s(cent_veg_py)     8.5241      9 85.031  &lt; 2e-16 ***
+## s(cent_veg_2py)    8.0514      9 64.684  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## R-sq.(adj) =  0.707   Deviance explained = 71.1%
+## fREML = 3127.3  Scale est. = 0.36817   n = 3263</code></pre>
+<pre class="r"><code>modP0_cent &lt;- mgcv::bam(pro ~ s(cent_aa_n, bs = &quot;ts&quot;) + 
+                    s(cent_aspect_rad, bs = &quot;ts&quot;) + 
+                    s(cent_slope, bs = &quot;ts&quot;) +
+                    s(cent_elev, bs = &quot;ts&quot;) +
+                    s(cent_tpi, bs = &quot;ts&quot;) +
+                    s(cent_prec_py, bs = &quot;ts&quot;) +
+                    s(cent_gdd_py, k = 1, bs = &quot;ts&quot;) + 
+                    s(cent_veg_cy, bs = &quot;ts&quot;) +
+                    s(cent_veg_py, bs = &quot;ts&quot;) +
+                    s(cent_veg_2py, bs = &quot;ts&quot;),
+                  data = dt)</code></pre>
+<pre><code>## Warning in smooth.construct.tp.smooth.spec(object, data, knots): basis dimension, k, increased to minimum possible</code></pre>
+<pre class="r"><code>summary(modP0_cent)</code></pre>
+<pre><code>## 
+## Family: gaussian 
+## Link function: identity 
+## 
+## Formula:
+## pro ~ s(cent_aa_n, bs = &quot;ts&quot;) + s(cent_aspect_rad, bs = &quot;ts&quot;) + 
+##     s(cent_slope, bs = &quot;ts&quot;) + s(cent_elev, bs = &quot;ts&quot;) + s(cent_tpi, 
+##     bs = &quot;ts&quot;) + s(cent_prec_py, bs = &quot;ts&quot;) + s(cent_gdd_py, 
+##     k = 1, bs = &quot;ts&quot;) + s(cent_veg_cy, bs = &quot;ts&quot;) + s(cent_veg_py, 
+##     bs = &quot;ts&quot;) + s(cent_veg_2py, bs = &quot;ts&quot;)
+## 
+## Parametric coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 13.31231    0.01062    1253   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Approximate significance of smooth terms:
+##                       edf Ref.df      F  p-value    
+## s(cent_aa_n)       2.4580      9  2.421 1.11e-05 ***
+## s(cent_aspect_rad) 8.5948      9 51.879  &lt; 2e-16 ***
+## s(cent_slope)      3.2519      9  2.112 0.000147 ***
+## s(cent_elev)       8.0607      9 49.847  &lt; 2e-16 ***
+## s(cent_tpi)        0.7716      9  0.364 0.038186 *  
+## s(cent_prec_py)    1.1911      9  3.453 5.62e-09 ***
+## s(cent_gdd_py)     1.0179      2 63.279  &lt; 2e-16 ***
+## s(cent_veg_cy)     8.2062      9 26.082  &lt; 2e-16 ***
+## s(cent_veg_py)     8.5241      9 85.031  &lt; 2e-16 ***
+## s(cent_veg_2py)    8.0514      9 64.684  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## R-sq.(adj) =  0.707   Deviance explained = 71.1%
+## fREML = 3127.3  Scale est. = 0.36817   n = 3263</code></pre>
+<pre class="r"><code>modNR0 &lt;- mgcv::bam(NR ~ s(cent_aa_n, bs = &quot;ts&quot;) + 
+                    s(cent_aspect_rad, bs = &quot;ts&quot;) + 
+                    s(cent_slope, bs = &quot;ts&quot;) +
+                    s(cent_elev, bs = &quot;ts&quot;) +
+                    s(cent_tpi, bs = &quot;ts&quot;) +
+                    s(cent_prec_py, bs = &quot;ts&quot;) +
+                    s(cent_gdd_py, k = 1, bs = &quot;ts&quot;) + 
+                    s(cent_veg_cy, bs = &quot;ts&quot;) +
+                    s(cent_veg_py, bs = &quot;ts&quot;) +
+                    s(cent_veg_2py, bs = &quot;ts&quot;),
+                  data = dt)</code></pre>
+<pre><code>## Warning in smooth.construct.tp.smooth.spec(object, data, knots): basis dimension, k, increased to minimum possible</code></pre>
+<pre class="r"><code>summary(modNR0)</code></pre>
+<pre><code>## 
+## Family: gaussian 
+## Link function: identity 
+## 
+## Formula:
+## NR ~ s(cent_aa_n, bs = &quot;ts&quot;) + s(cent_aspect_rad, bs = &quot;ts&quot;) + 
+##     s(cent_slope, bs = &quot;ts&quot;) + s(cent_elev, bs = &quot;ts&quot;) + s(cent_tpi, 
+##     bs = &quot;ts&quot;) + s(cent_prec_py, bs = &quot;ts&quot;) + s(cent_gdd_py, 
+##     k = 1, bs = &quot;ts&quot;) + s(cent_veg_cy, bs = &quot;ts&quot;) + s(cent_veg_py, 
+##     bs = &quot;ts&quot;) + s(cent_veg_2py, bs = &quot;ts&quot;)
+## 
+## Parametric coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 237.2493     0.9669   245.4   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Approximate significance of smooth terms:
+##                       edf Ref.df      F  p-value    
+## s(cent_aa_n)       0.9832      9  1.857 2.33e-05 ***
+## s(cent_aspect_rad) 5.9504      9  3.977 3.28e-07 ***
+## s(cent_slope)      1.4253      9  5.557 1.49e-13 ***
+## s(cent_elev)       7.8239      9 13.658  &lt; 2e-16 ***
+## s(cent_tpi)        0.7784      9  0.379 0.035000 *  
+## s(cent_prec_py)    2.9759      9 12.293  &lt; 2e-16 ***
+## s(cent_gdd_py)     0.8809      2  3.670 0.000874 ***
+## s(cent_veg_cy)     4.2978      9  6.894 9.49e-15 ***
+## s(cent_veg_py)     7.2099      9 34.250  &lt; 2e-16 ***
+## s(cent_veg_2py)    7.0348      9 11.070  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## R-sq.(adj) =  0.361   Deviance explained = 36.9%
+## fREML =  17803  Scale est. = 3050.4    n = 3263</code></pre>
+<pre class="r"><code>modNR0_cent &lt;- mgcv::bam(NR ~ s(cent_aa_n, bs = &quot;ts&quot;) + 
+                    s(cent_aspect_rad, bs = &quot;ts&quot;) + 
+                    s(cent_slope, bs = &quot;ts&quot;) +
+                    s(cent_elev, bs = &quot;ts&quot;) +
+                    s(cent_tpi, bs = &quot;ts&quot;) +
+                    s(cent_prec_py, bs = &quot;ts&quot;) +
+                    s(cent_gdd_py, k = 1, bs = &quot;ts&quot;) + 
+                    s(cent_veg_cy, bs = &quot;ts&quot;) +
+                    s(cent_veg_py, bs = &quot;ts&quot;) +
+                    s(cent_veg_2py, bs = &quot;ts&quot;),
+                  data = dt)</code></pre>
+<pre><code>## Warning in smooth.construct.tp.smooth.spec(object, data, knots): basis dimension, k, increased to minimum possible</code></pre>
+<pre class="r"><code>summary(modNR0_cent)</code></pre>
+<pre><code>## 
+## Family: gaussian 
+## Link function: identity 
+## 
+## Formula:
+## NR ~ s(cent_aa_n, bs = &quot;ts&quot;) + s(cent_aspect_rad, bs = &quot;ts&quot;) + 
+##     s(cent_slope, bs = &quot;ts&quot;) + s(cent_elev, bs = &quot;ts&quot;) + s(cent_tpi, 
+##     bs = &quot;ts&quot;) + s(cent_prec_py, bs = &quot;ts&quot;) + s(cent_gdd_py, 
+##     k = 1, bs = &quot;ts&quot;) + s(cent_veg_cy, bs = &quot;ts&quot;) + s(cent_veg_py, 
+##     bs = &quot;ts&quot;) + s(cent_veg_2py, bs = &quot;ts&quot;)
+## 
+## Parametric coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 237.2493     0.9669   245.4   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Approximate significance of smooth terms:
+##                       edf Ref.df      F  p-value    
+## s(cent_aa_n)       0.9832      9  1.857 2.33e-05 ***
+## s(cent_aspect_rad) 5.9504      9  3.977 3.28e-07 ***
+## s(cent_slope)      1.4253      9  5.557 1.49e-13 ***
+## s(cent_elev)       7.8239      9 13.658  &lt; 2e-16 ***
+## s(cent_tpi)        0.7784      9  0.379 0.035000 *  
+## s(cent_prec_py)    2.9759      9 12.293  &lt; 2e-16 ***
+## s(cent_gdd_py)     0.8809      2  3.670 0.000874 ***
+## s(cent_veg_cy)     4.2978      9  6.894 9.49e-15 ***
+## s(cent_veg_py)     7.2099      9 34.250  &lt; 2e-16 ***
+## s(cent_veg_2py)    7.0348      9 11.070  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## R-sq.(adj) =  0.361   Deviance explained = 36.9%
+## fREML =  17803  Scale est. = 3050.4    n = 3263</code></pre>
+</div>
+<div id="check-diagnostics-1" class="section level4">
+<h4>Check Diagnostics</h4>
+<p>For each model fit, the diagnostics are checked to assess the assumptions of each model. These include linearity, normality of residuals, homogeneity of variance, and independence.</p>
+<p>First make a directory to save outputs.</p>
+<pre class="r"><code>cwd &lt;- paste0(&quot;results/&quot;, field_name, &quot;/diagnostics&quot;)
+if (!file.exists(cwd)) {
+  dir.create(cwd)
+}</code></pre>
+<p>Look at yield models.</p>
+<pre class="r"><code>par(mfrow=c(2,2))
+png(paste0(cwd, &quot;/yld_diagnostics.png&quot;), 
+    width = 10, 
+    height = 10,
+    units = &#39;in&#39;, 
+    res = 100)
+  par(mfrow=c(2,2))
+  mgcv::gam.check(modY0)</code></pre>
+<pre><code>## 
+## Method: fREML   Optimizer: perf newton
+## full convergence after 12 iterations.
+## Gradient range [-2.09657e-05,8.626573e-06]
+## (score 11769.64 &amp; scale 75.76947).
+## Hessian positive definite, eigenvalue range [0.08970517,1631.031].
+## Model rank =  84 / 84 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                       k&#39;   edf k-index p-value    
+## s(cent_aa_n)       9.000 0.884    0.99   0.150    
+## s(cent_aspect_rad) 9.000 5.197    0.96   0.015 *  
+## s(cent_slope)      9.000 1.377    0.97   0.030 *  
+## s(cent_elev)       9.000 7.931    1.00   0.435    
+## s(cent_tpi)        9.000 0.870    0.96   0.015 *  
+## s(cent_prec_py)    9.000 3.137    1.02   0.925    
+## s(cent_gdd_py)     2.000 0.534    1.02   0.895    
+## s(cent_veg_cy)     9.000 4.948    0.68  &lt;2e-16 ***
+## s(cent_veg_py)     9.000 6.894    0.65  &lt;2e-16 ***
+## s(cent_veg_2py)    9.000 5.397    0.68  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>dev.off()</code></pre>
+<pre><code>## png 
+##   2</code></pre>
+<pre class="r"><code>mgcv::gam.check(modY0)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<pre><code>## 
+## Method: fREML   Optimizer: perf newton
+## full convergence after 12 iterations.
+## Gradient range [-2.09657e-05,8.626573e-06]
+## (score 11769.64 &amp; scale 75.76947).
+## Hessian positive definite, eigenvalue range [0.08970517,1631.031].
+## Model rank =  84 / 84 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                       k&#39;   edf k-index p-value    
+## s(cent_aa_n)       9.000 0.884    0.99    0.22    
+## s(cent_aspect_rad) 9.000 5.197    0.96    0.01 ** 
+## s(cent_slope)      9.000 1.377    0.97    0.02 *  
+## s(cent_elev)       9.000 7.931    1.00    0.48    
+## s(cent_tpi)        9.000 0.870    0.96    0.01 ** 
+## s(cent_prec_py)    9.000 3.137    1.02    0.92    
+## s(cent_gdd_py)     2.000 0.534    1.02    0.86    
+## s(cent_veg_cy)     9.000 4.948    0.68  &lt;2e-16 ***
+## s(cent_veg_py)     9.000 6.894    0.65  &lt;2e-16 ***
+## s(cent_veg_2py)    9.000 5.397    0.68  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>png(paste0(cwd, &quot;/yld_cent_diagnostics.png&quot;), 
+    width = 10, 
+    height = 10,
+    units = &#39;in&#39;, 
+    res = 100)
+  par(mfrow=c(2,2))
+  mgcv::gam.check(modY0_cent)</code></pre>
+<pre><code>## 
+## Method: fREML   Optimizer: perf newton
+## full convergence after 12 iterations.
+## Gradient range [-2.09657e-05,8.626573e-06]
+## (score 11769.64 &amp; scale 75.76947).
+## Hessian positive definite, eigenvalue range [0.08970517,1631.031].
+## Model rank =  84 / 84 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                       k&#39;   edf k-index p-value    
+## s(cent_aa_n)       9.000 0.884    0.99    0.24    
+## s(cent_aspect_rad) 9.000 5.197    0.96  &lt;2e-16 ***
+## s(cent_slope)      9.000 1.377    0.97    0.03 *  
+## s(cent_elev)       9.000 7.931    1.00    0.41    
+## s(cent_tpi)        9.000 0.870    0.96    0.01 ** 
+## s(cent_prec_py)    9.000 3.137    1.02    0.91    
+## s(cent_gdd_py)     2.000 0.534    1.02    0.85    
+## s(cent_veg_cy)     9.000 4.948    0.68  &lt;2e-16 ***
+## s(cent_veg_py)     9.000 6.894    0.65  &lt;2e-16 ***
+## s(cent_veg_2py)    9.000 5.397    0.68  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>dev.off()</code></pre>
+<pre><code>## png 
+##   2</code></pre>
+<pre class="r"><code>mgcv::gam.check(modY0_cent)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-42-2.png" width="672" /></p>
+<pre><code>## 
+## Method: fREML   Optimizer: perf newton
+## full convergence after 12 iterations.
+## Gradient range [-2.09657e-05,8.626573e-06]
+## (score 11769.64 &amp; scale 75.76947).
+## Hessian positive definite, eigenvalue range [0.08970517,1631.031].
+## Model rank =  84 / 84 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                       k&#39;   edf k-index p-value    
+## s(cent_aa_n)       9.000 0.884    0.99   0.190    
+## s(cent_aspect_rad) 9.000 5.197    0.96   0.010 ** 
+## s(cent_slope)      9.000 1.377    0.97   0.030 *  
+## s(cent_elev)       9.000 7.931    1.00   0.480    
+## s(cent_tpi)        9.000 0.870    0.96   0.015 *  
+## s(cent_prec_py)    9.000 3.137    1.02   0.915    
+## s(cent_gdd_py)     2.000 0.534    1.02   0.865    
+## s(cent_veg_cy)     9.000 4.948    0.68  &lt;2e-16 ***
+## s(cent_veg_py)     9.000 6.894    0.65  &lt;2e-16 ***
+## s(cent_veg_2py)    9.000 5.397    0.68  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Look at protein models.</p>
+<pre class="r"><code>par(mfrow=c(2,2))
+png(paste0(cwd, &quot;/pro_diagnostics.png&quot;), 
+    width = 10, 
+    height = 10,
+    units = &#39;in&#39;, 
+    res = 100)
+  par(mfrow=c(2,2))
+  mgcv::gam.check(modP0)</code></pre>
+<pre><code>## 
+## Method: fREML   Optimizer: perf newton
+## full convergence after 11 iterations.
+## Gradient range [-2.335383e-05,1.870232e-06]
+## (score 3127.254 &amp; scale 0.3681675).
+## Hessian positive definite, eigenvalue range [0.2934151,1631.056].
+## Model rank =  84 / 84 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                       k&#39;   edf k-index p-value    
+## s(cent_aa_n)       9.000 2.458    0.99    0.31    
+## s(cent_aspect_rad) 9.000 8.595    0.96    0.03 *  
+## s(cent_slope)      9.000 3.252    0.99    0.32    
+## s(cent_elev)       9.000 8.061    0.97    0.01 ** 
+## s(cent_tpi)        9.000 0.772    1.01    0.80    
+## s(cent_prec_py)    9.000 1.191    1.01    0.72    
+## s(cent_gdd_py)     2.000 1.018    1.01    0.63    
+## s(cent_veg_cy)     9.000 8.206    0.56  &lt;2e-16 ***
+## s(cent_veg_py)     9.000 8.524    0.56  &lt;2e-16 ***
+## s(cent_veg_2py)    9.000 8.051    0.56  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>dev.off()</code></pre>
+<pre><code>## png 
+##   2</code></pre>
+<pre class="r"><code>mgcv::gam.check(modP0)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+<pre><code>## 
+## Method: fREML   Optimizer: perf newton
+## full convergence after 11 iterations.
+## Gradient range [-2.335383e-05,1.870232e-06]
+## (score 3127.254 &amp; scale 0.3681675).
+## Hessian positive definite, eigenvalue range [0.2934151,1631.056].
+## Model rank =  84 / 84 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                       k&#39;   edf k-index p-value    
+## s(cent_aa_n)       9.000 2.458    0.99   0.325    
+## s(cent_aspect_rad) 9.000 8.595    0.96   0.015 *  
+## s(cent_slope)      9.000 3.252    0.99   0.300    
+## s(cent_elev)       9.000 8.061    0.97   0.015 *  
+## s(cent_tpi)        9.000 0.772    1.01   0.770    
+## s(cent_prec_py)    9.000 1.191    1.01   0.675    
+## s(cent_gdd_py)     2.000 1.018    1.01   0.715    
+## s(cent_veg_cy)     9.000 8.206    0.56  &lt;2e-16 ***
+## s(cent_veg_py)     9.000 8.524    0.56  &lt;2e-16 ***
+## s(cent_veg_2py)    9.000 8.051    0.56  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>png(paste0(cwd, &quot;/pro_cent_diagnostics.png&quot;), 
+    width = 10, 
+    height = 10,
+    units = &#39;in&#39;, 
+    res = 100)
+  par(mfrow=c(2,2))
+  mgcv::gam.check(modP0_cent)</code></pre>
+<pre><code>## 
+## Method: fREML   Optimizer: perf newton
+## full convergence after 11 iterations.
+## Gradient range [-2.335383e-05,1.870232e-06]
+## (score 3127.254 &amp; scale 0.3681675).
+## Hessian positive definite, eigenvalue range [0.2934151,1631.056].
+## Model rank =  84 / 84 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                       k&#39;   edf k-index p-value    
+## s(cent_aa_n)       9.000 2.458    0.99   0.400    
+## s(cent_aspect_rad) 9.000 8.595    0.96   0.045 *  
+## s(cent_slope)      9.000 3.252    0.99   0.365    
+## s(cent_elev)       9.000 8.061    0.97   0.030 *  
+## s(cent_tpi)        9.000 0.772    1.01   0.720    
+## s(cent_prec_py)    9.000 1.191    1.01   0.685    
+## s(cent_gdd_py)     2.000 1.018    1.01   0.660    
+## s(cent_veg_cy)     9.000 8.206    0.56  &lt;2e-16 ***
+## s(cent_veg_py)     9.000 8.524    0.56  &lt;2e-16 ***
+## s(cent_veg_2py)    9.000 8.051    0.56  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>dev.off()</code></pre>
+<pre><code>## png 
+##   2</code></pre>
+<pre class="r"><code>mgcv::gam.check(modP0_cent)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-43-2.png" width="672" /></p>
+<pre><code>## 
+## Method: fREML   Optimizer: perf newton
+## full convergence after 11 iterations.
+## Gradient range [-2.335383e-05,1.870232e-06]
+## (score 3127.254 &amp; scale 0.3681675).
+## Hessian positive definite, eigenvalue range [0.2934151,1631.056].
+## Model rank =  84 / 84 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                       k&#39;   edf k-index p-value    
+## s(cent_aa_n)       9.000 2.458    0.99   0.325    
+## s(cent_aspect_rad) 9.000 8.595    0.96   0.015 *  
+## s(cent_slope)      9.000 3.252    0.99   0.285    
+## s(cent_elev)       9.000 8.061    0.97   0.015 *  
+## s(cent_tpi)        9.000 0.772    1.01   0.760    
+## s(cent_prec_py)    9.000 1.191    1.01   0.595    
+## s(cent_gdd_py)     2.000 1.018    1.01   0.700    
+## s(cent_veg_cy)     9.000 8.206    0.56  &lt;2e-16 ***
+## s(cent_veg_py)     9.000 8.524    0.56  &lt;2e-16 ***
+## s(cent_veg_2py)    9.000 8.051    0.56  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Look at net-return models.</p>
+<pre class="r"><code>par(mfrow=c(2,2))
+png(paste0(cwd, &quot;/NR_diagnostics.png&quot;), 
+    width = 10, 
+    height = 10,
+    units = &#39;in&#39;, 
+    res = 100)
+  par(mfrow=c(2,2))
+  mgcv::gam.check(modNR0)</code></pre>
+<pre><code>## 
+## Method: fREML   Optimizer: perf newton
+## full convergence after 10 iterations.
+## Gradient range [-2.135948e-09,2.752612e-10]
+## (score 17802.72 &amp; scale 3050.448).
+## Hessian positive definite, eigenvalue range [0.2000233,1631.035].
+## Model rank =  84 / 84 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                       k&#39;   edf k-index p-value    
+## s(cent_aa_n)       9.000 0.983    0.99   0.285    
+## s(cent_aspect_rad) 9.000 5.950    0.96   0.015 *  
+## s(cent_slope)      9.000 1.425    0.97   0.055 .  
+## s(cent_elev)       9.000 7.824    1.00   0.480    
+## s(cent_tpi)        9.000 0.778    0.96   0.030 *  
+## s(cent_prec_py)    9.000 2.976    1.02   0.900    
+## s(cent_gdd_py)     2.000 0.881    1.02   0.855    
+## s(cent_veg_cy)     9.000 4.298    0.68  &lt;2e-16 ***
+## s(cent_veg_py)     9.000 7.210    0.65  &lt;2e-16 ***
+## s(cent_veg_2py)    9.000 7.035    0.68  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>dev.off()</code></pre>
+<pre><code>## png 
+##   2</code></pre>
+<pre class="r"><code>mgcv::gam.check(modNR0)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+<pre><code>## 
+## Method: fREML   Optimizer: perf newton
+## full convergence after 10 iterations.
+## Gradient range [-2.135948e-09,2.752612e-10]
+## (score 17802.72 &amp; scale 3050.448).
+## Hessian positive definite, eigenvalue range [0.2000233,1631.035].
+## Model rank =  84 / 84 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                       k&#39;   edf k-index p-value    
+## s(cent_aa_n)       9.000 0.983    0.99   0.290    
+## s(cent_aspect_rad) 9.000 5.950    0.96   0.010 ** 
+## s(cent_slope)      9.000 1.425    0.97   0.030 *  
+## s(cent_elev)       9.000 7.824    1.00   0.480    
+## s(cent_tpi)        9.000 0.778    0.96   0.025 *  
+## s(cent_prec_py)    9.000 2.976    1.02   0.860    
+## s(cent_gdd_py)     2.000 0.881    1.02   0.885    
+## s(cent_veg_cy)     9.000 4.298    0.68  &lt;2e-16 ***
+## s(cent_veg_py)     9.000 7.210    0.65  &lt;2e-16 ***
+## s(cent_veg_2py)    9.000 7.035    0.68  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>png(paste0(cwd, &quot;/NR_cent_diagnostics.png&quot;), 
+    width = 10, 
+    height = 10,
+    units = &#39;in&#39;, 
+    res = 100)  
+  par(mfrow=c(2,2))
+  mgcv::gam.check(modNR0_cent)</code></pre>
+<pre><code>## 
+## Method: fREML   Optimizer: perf newton
+## full convergence after 10 iterations.
+## Gradient range [-2.135948e-09,2.752612e-10]
+## (score 17802.72 &amp; scale 3050.448).
+## Hessian positive definite, eigenvalue range [0.2000233,1631.035].
+## Model rank =  84 / 84 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                       k&#39;   edf k-index p-value    
+## s(cent_aa_n)       9.000 0.983    0.99   0.320    
+## s(cent_aspect_rad) 9.000 5.950    0.96   0.010 ** 
+## s(cent_slope)      9.000 1.425    0.97   0.055 .  
+## s(cent_elev)       9.000 7.824    1.00   0.485    
+## s(cent_tpi)        9.000 0.778    0.96   0.025 *  
+## s(cent_prec_py)    9.000 2.976    1.02   0.875    
+## s(cent_gdd_py)     2.000 0.881    1.02   0.860    
+## s(cent_veg_cy)     9.000 4.298    0.68  &lt;2e-16 ***
+## s(cent_veg_py)     9.000 7.210    0.65  &lt;2e-16 ***
+## s(cent_veg_2py)    9.000 7.035    0.68  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>dev.off()</code></pre>
+<pre><code>## png 
+##   2</code></pre>
+<pre class="r"><code>mgcv::gam.check(modNR0_cent)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-44-2.png" width="672" /></p>
+<pre><code>## 
+## Method: fREML   Optimizer: perf newton
+## full convergence after 10 iterations.
+## Gradient range [-2.135948e-09,2.752612e-10]
+## (score 17802.72 &amp; scale 3050.448).
+## Hessian positive definite, eigenvalue range [0.2000233,1631.035].
+## Model rank =  84 / 84 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+## indicate that k is too low, especially if edf is close to k&#39;.
+## 
+##                       k&#39;   edf k-index p-value    
+## s(cent_aa_n)       9.000 0.983    0.99   0.300    
+## s(cent_aspect_rad) 9.000 5.950    0.96   0.020 *  
+## s(cent_slope)      9.000 1.425    0.97   0.050 *  
+## s(cent_elev)       9.000 7.824    1.00   0.450    
+## s(cent_tpi)        9.000 0.778    0.96   0.045 *  
+## s(cent_prec_py)    9.000 2.976    1.02   0.915    
+## s(cent_gdd_py)     2.000 0.881    1.02   0.865    
+## s(cent_veg_cy)     9.000 4.298    0.68  &lt;2e-16 ***
+## s(cent_veg_py)     9.000 7.210    0.65  &lt;2e-16 ***
+## s(cent_veg_2py)    9.000 7.035    0.68  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<div id="update-models-1" class="section level4">
+<h4>Update Models</h4>
+<p>Although there seems to be some heavy left tails in the normal qq-plots and violations of homogeneity of variance, we remind ourselves that the ultimate goal of these models is to make the best prediction, not necessarily the best interpretations. However, we are going to address the violation of the assumption of independence, because data closer to each other are more related than data farther apart from each other.</p>
+<p>To take spatial autocorrelation into account, a gaussian process basis prediction function is used on the product of latitude and longitude.</p>
+<pre class="r"><code>modY1 &lt;- mgcv::bam(yld ~ s(x, y, bs = &quot;gp&quot;, m = 2) +
+                    s(cent_aa_n, bs = &quot;ts&quot;) + 
+                    s(cent_aspect_rad, bs = &quot;ts&quot;) + 
+                    s(cent_slope, bs = &quot;ts&quot;) +
+                    s(cent_elev, bs = &quot;ts&quot;) +
+                    s(cent_tpi, bs = &quot;ts&quot;) +
+                    s(cent_prec_py, bs = &quot;ts&quot;) +
+                    s(cent_gdd_py, k = 1, bs = &quot;ts&quot;) + 
+                    s(cent_veg_cy, bs = &quot;ts&quot;) +
+                    s(cent_veg_py, bs = &quot;ts&quot;) +
+                    s(cent_veg_2py, bs = &quot;ts&quot;),
+                  data = dt)</code></pre>
+<pre><code>## Warning in smooth.construct.tp.smooth.spec(object, data, knots): basis dimension, k, increased to minimum possible</code></pre>
+<pre class="r"><code>modY1_cent &lt;- mgcv::bam(yld ~ s(x, y, bs = &quot;gp&quot;, m = 2) +
+                    s(cent_aa_n, bs = &quot;ts&quot;) + 
+                    s(cent_aspect_rad, bs = &quot;ts&quot;) + 
+                    s(cent_slope, bs = &quot;ts&quot;) +
+                    s(cent_elev, bs = &quot;ts&quot;) +
+                    s(cent_tpi, bs = &quot;ts&quot;) +
+                    s(cent_prec_py, bs = &quot;ts&quot;) +
+                    s(cent_gdd_py, k = 1, bs = &quot;ts&quot;) + 
+                    s(cent_veg_cy, bs = &quot;ts&quot;) +
+                    s(cent_veg_py, bs = &quot;ts&quot;) +
+                    s(cent_veg_2py, bs = &quot;ts&quot;),
+                  data = dt)</code></pre>
+<pre><code>## Warning in smooth.construct.tp.smooth.spec(object, data, knots): basis dimension, k, increased to minimum possible</code></pre>
+<pre class="r"><code>modP1 &lt;- mgcv::bam(pro ~ s(x, y, bs = &quot;gp&quot;, m = 2) +
+                    s(cent_aa_n, bs = &quot;ts&quot;) + 
+                    s(cent_aspect_rad, bs = &quot;ts&quot;) + 
+                    s(cent_slope, bs = &quot;ts&quot;) +
+                    s(cent_elev, bs = &quot;ts&quot;) +
+                    s(cent_tpi, bs = &quot;ts&quot;) +
+                    s(cent_prec_py, bs = &quot;ts&quot;) +
+                    s(cent_gdd_py, k = 1, bs = &quot;ts&quot;) + 
+                    s(cent_veg_cy, bs = &quot;ts&quot;) +
+                    s(cent_veg_py, bs = &quot;ts&quot;) +
+                    s(cent_veg_2py, bs = &quot;ts&quot;),
+                  data = dt)</code></pre>
+<pre><code>## Warning in smooth.construct.tp.smooth.spec(object, data, knots): basis dimension, k, increased to minimum possible</code></pre>
+<pre class="r"><code>modP1_cent &lt;- mgcv::bam(pro ~ s(x, y, bs = &quot;gp&quot;, m = 2) +
+                    s(cent_aa_n, bs = &quot;ts&quot;) + 
+                    s(cent_aspect_rad, bs = &quot;ts&quot;) + 
+                    s(cent_slope, bs = &quot;ts&quot;) +
+                    s(cent_elev, bs = &quot;ts&quot;) +
+                    s(cent_tpi, bs = &quot;ts&quot;) +
+                    s(cent_prec_py, bs = &quot;ts&quot;) +
+                    s(cent_gdd_py, k = 1, bs = &quot;ts&quot;) + 
+                    s(cent_veg_cy, bs = &quot;ts&quot;) +
+                    s(cent_veg_py, bs = &quot;ts&quot;) +
+                    s(cent_veg_2py, bs = &quot;ts&quot;),
+                  data = dt)</code></pre>
+<pre><code>## Warning in smooth.construct.tp.smooth.spec(object, data, knots): basis dimension, k, increased to minimum possible</code></pre>
+<pre class="r"><code>modNR1 &lt;- mgcv::bam(NR ~ s(x, y, bs = &quot;gp&quot;, m = 2) +
+                    s(cent_aa_n, bs = &quot;ts&quot;) + 
+                    s(cent_aspect_rad, bs = &quot;ts&quot;) + 
+                    s(cent_slope, bs = &quot;ts&quot;) +
+                    s(cent_elev, bs = &quot;ts&quot;) +
+                    s(cent_tpi, bs = &quot;ts&quot;) +
+                    s(cent_prec_py, bs = &quot;ts&quot;) +
+                    s(cent_gdd_py, k = 1, bs = &quot;ts&quot;) + 
+                    s(cent_veg_cy, bs = &quot;ts&quot;) +
+                    s(cent_veg_py, bs = &quot;ts&quot;) +
+                    s(cent_veg_2py, bs = &quot;ts&quot;),
+                  data = dt)</code></pre>
+<pre><code>## Warning in smooth.construct.tp.smooth.spec(object, data, knots): basis dimension, k, increased to minimum possible</code></pre>
+<pre class="r"><code>modNR1_cent &lt;- mgcv::bam(NR ~ s(x, y, bs = &quot;gp&quot;, m = 2) +
+                    s(cent_aa_n, bs = &quot;ts&quot;) + 
+                    s(cent_aspect_rad, bs = &quot;ts&quot;) + 
+                    s(cent_slope, bs = &quot;ts&quot;) +
+                    s(cent_elev, bs = &quot;ts&quot;) +
+                    s(cent_tpi, bs = &quot;ts&quot;) +
+                    s(cent_prec_py, bs = &quot;ts&quot;) +
+                    s(cent_gdd_py, k = 1, bs = &quot;ts&quot;) + 
+                    s(cent_veg_cy, bs = &quot;ts&quot;) +
+                    s(cent_veg_py, bs = &quot;ts&quot;) +
+                    s(cent_veg_2py, bs = &quot;ts&quot;),
+                  data = dt)</code></pre>
+<pre><code>## Warning in smooth.construct.tp.smooth.spec(object, data, knots): basis dimension, k, increased to minimum possible</code></pre>
+</div>
+<div id="assess-models-1" class="section level4">
+<h4>Assess Models</h4>
+<p>To asses the predictive ability of each model, it is used to predict the response in the validation dataset. This allows us to calculate RMSE and make plots of the model fits compared to observed values.</p>
+<pre class="r"><code>dv$gam_pred_yld &lt;- predict(modY1, dv)
+dv$gam_pred_yld_cent &lt;- predict(modY1_cent, dv)
+dv$gam_pred_pro &lt;- predict(modP1, dv)
+dv$gam_pred_pro_cent &lt;- predict(modP1_cent, dv)
+dv$gam_pred_NR &lt;- predict(modNR1, dv)
+dv$gam_pred_NR_cent &lt;- predict(modNR1, dv)
+
+plotVal(dv, &quot;yld&quot;, &quot;gam_pred_yld&quot;, field_name, year, modY1, TRUE)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+<pre class="r"><code>plotVal(dv, &quot;yld&quot;, &quot;gam_pred_yld_cent&quot;, field_name, year, modY1_cent, TRUE)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-46-2.png" width="672" /></p>
+<pre class="r"><code>plotVal(dv, &quot;pro&quot;, &quot;gam_pred_pro&quot;, field_name, year, modP1, TRUE)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-46-3.png" width="672" /></p>
+<pre class="r"><code>plotVal(dv, &quot;pro&quot;, &quot;gam_pred_pro_cent&quot;, field_name, year, modP1_cent, TRUE)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-46-4.png" width="672" /></p>
+<pre class="r"><code>plotVal(dv, &quot;NR&quot;, &quot;gam_pred_NR&quot;, field_name, year, modNR1, TRUE)</code></pre>
+<pre><code>## Warning: Removed 9 rows containing missing values (geom_point).
+
+## Warning: Removed 9 rows containing missing values (geom_point).</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-46-5.png" width="672" /></p>
+<pre class="r"><code>plotVal(dv, &quot;NR&quot;, &quot;gam_pred_NR_cent&quot;, field_name, year, modNR1_cent, TRUE)</code></pre>
+<pre><code>## Warning: Removed 9 rows containing missing values (geom_point).
+
+## Warning: Removed 9 rows containing missing values (geom_point).</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-46-6.png" width="672" /></p>
+<p>Based on the fitted values, there does not appear to be any difference between models fit with raw or centered response variables, so raw values will be assessed. Now, plot the observed vs. predcited values and calculate RMSE.</p>
+<pre class="r"><code>plotObsVPreds(dv, &quot;yld&quot;, &quot;gam_pred_yld&quot;, field_name, year, TRUE)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+<pre class="r"><code>plotObsVPreds(dv, &quot;yld&quot;, &quot;gam_pred_yld_cent&quot;, field_name, year, TRUE)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-47-2.png" width="672" /></p>
+<pre class="r"><code>plotObsVPreds(dv, &quot;pro&quot;, &quot;gam_pred_pro&quot;, field_name, year, TRUE)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-47-3.png" width="672" /></p>
+<pre class="r"><code>plotObsVPreds(dv, &quot;pro&quot;, &quot;gam_pred_pro_cent&quot;, field_name, year, TRUE)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-47-4.png" width="672" /></p>
+<pre class="r"><code>plotObsVPreds(dv, &quot;NR&quot;, &quot;gam_pred_NR&quot;, field_name, year, TRUE)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-47-5.png" width="672" /></p>
+<pre class="r"><code>plotObsVPreds(dv, &quot;NR&quot;, &quot;gam_pred_NR_cent&quot;, field_name, year, TRUE)</code></pre>
+<p><img src="analysis_sre1314_files/figure-html/unnamed-chunk-47-6.png" width="672" /></p>
+</div>
+<div id="save-outputs-2" class="section level4">
+<h4>Save Outputs</h4>
+<p>Now that each model has been fit, the RMSE and AIC of each is recorded for further analysis and comparison between years and across years. Again, because centering the responses results in the exact same model fits, it is omitted.</p>
+<pre class="r"><code>rmses &lt;- c(round(Metrics::rmse(na.omit(dv$yld), na.omit(dv$gam_pred_yld)), 4),
+           round(Metrics::rmse(na.omit(dv$pro), na.omit(dv$gam_pred_pro)), 4),
+           round(Metrics::rmse(na.omit(dv$NR), na.omit(dv$gam_pred_NR)), 4))
+aics &lt;- c(AIC(modY0), AIC(modP0), AIC(modNR0))
+forOutput &lt;- data.frame(rep(field_name, 3), rep(year, 3), rep(&quot;GAM&quot;, 3),
+                        c(&quot;Yield&quot;, &quot;Protein&quot;, &quot;Net-Return&quot;), rmses, aics)
+# EDIT
+output[4:6, ] &lt;- forOutput</code></pre>
+</div>
+<div id="sensitivity-analysis-1" class="section level4">
+<h4>Sensitivity Analysis</h4>
+<p>To perform the sensitivity analysis, each variable is increased or decreased by 10%. The resulting mean prediction across the field for the response is recorded and compared against the mean responses without adjustment. Sensitivity is calculated as the absolute value of the difference between the mean response of the default minus the mean response in the adjusted setting, over the mean response in the default system, divided by 0.1.</p>
+<p>Make tables to hold sensitivity analysis results.</p>
+<pre class="r"><code>covars &lt;- c(&quot;aa_n&quot;, &quot;aspect_rad&quot;, &quot;slope&quot;, &quot;elev&quot;,
+            &quot;tpi&quot;, &quot;prec_py&quot;, &quot;gdd_py&quot;, &quot;veg_cy&quot;,
+            &quot;veg_py&quot;, &quot;veg_2py&quot;)
+
+yldSensTab &lt;- matrix(0, nrow = length(covars)*2 + 1, ncol = 5) %&gt;%
+  as.data.frame()
+names(yldSensTab) &lt;- c(&quot;Parameter&quot;, &quot;Adjustment&quot;, &quot;MeanResp&quot;,
+                       &quot;Sensitivity.value&quot;,&quot;Elasticity.value&quot;)
+yldSensTab$ResponseVar &lt;- &quot;yld&quot;
+yldSensTab$Parameter &lt;- c(&quot;Defaults&quot;, rep(covars, each = 2))
+yldSensTab$Adjustment &lt;- c(NA, rep(c(&quot;10&quot;, &quot;-10&quot;), length(covars)))
+
+proSensTab &lt;- matrix(0, nrow = length(covars)*2 + 1, ncol = 5) %&gt;%
+  as.data.frame()
+names(proSensTab) &lt;- c(&quot;Parameter&quot;, &quot;Adjustment&quot;, &quot;MeanResp&quot;,
+                       &quot;Sensitivity.value&quot;,&quot;Elasticity.value&quot;)
+proSensTab$ResponseVar &lt;- &quot;pro&quot;
+proSensTab$Parameter &lt;- c(&quot;Defaults&quot;, rep(covars, each = 2))
+proSensTab$Adjustment &lt;- c(NA, rep(c(&quot;10&quot;, &quot;-10&quot;), length(covars)))
+
+
+NRSensTab &lt;- matrix(0, nrow = length(covars)*2 + 1, ncol = 5) %&gt;%
+  as.data.frame()
+names(NRSensTab) &lt;- c(&quot;Parameter&quot;, &quot;Adjustment&quot;, &quot;MeanResp&quot;,
+                       &quot;Sensitivity.value&quot;,&quot;Elasticity.value&quot;)
+NRSensTab$ResponseVar &lt;- &quot;NR&quot;
+NRSensTab$Parameter &lt;- c(&quot;Defaults&quot;, rep(covars, each = 2))
+NRSensTab$Adjustment &lt;- c(NA, rep(c(&quot;10&quot;, &quot;-10&quot;), length(covars)))</code></pre>
+<p>Run sensitivity analysis.</p>
+<pre class="r"><code>yldSensTab &lt;- sensitivity(yldSensTab, &quot;yld&quot;, dv, modY1)
+proSensTab &lt;- sensitivity(proSensTab, &quot;pro&quot;, dv, modP1)
+NRSensTab &lt;- sensitivity(NRSensTab, &quot;NR&quot;, dv, modNR1)</code></pre>
+<p>Repeat for centered data.</p>
+<pre class="r"><code>covars &lt;- c(&quot;cent_aa_n&quot;, &quot;cent_aspect_rad&quot;, &quot;cent_slope&quot;, &quot;cent_elev&quot;,
+            &quot;cent_tpi&quot;, &quot;cent_prec_py&quot;, &quot;cent_gdd_py&quot;, &quot;cent_veg_cy&quot;,
+            &quot;cent_veg_py&quot;, &quot;cent_veg_2py&quot;)
+
+centyldSensTab &lt;- matrix(0, nrow = length(covars)*2 + 1, ncol = 5) %&gt;%
+  as.data.frame()
+names(centyldSensTab) &lt;- c(&quot;Parameter&quot;, &quot;Adjustment&quot;, &quot;MeanResp&quot;,
+                       &quot;Sensitivity.value&quot;,&quot;Elasticity.value&quot;)
+centyldSensTab$ResponseVar &lt;- &quot;yld&quot;
+centyldSensTab$Parameter &lt;- c(&quot;Defaults&quot;, rep(covars, each = 2))
+centyldSensTab$Adjustment &lt;- c(NA, rep(c(&quot;10&quot;, &quot;-10&quot;), length(covars)))
+
+centproSensTab &lt;- matrix(0, nrow = length(covars)*2 + 1, ncol = 5) %&gt;%
+  as.data.frame()
+names(centproSensTab) &lt;- c(&quot;Parameter&quot;, &quot;Adjustment&quot;, &quot;MeanResp&quot;,
+                       &quot;Sensitivity.value&quot;,&quot;Elasticity.value&quot;)
+centproSensTab$ResponseVar &lt;- &quot;pro&quot;
+centproSensTab$Parameter &lt;- c(&quot;Defaults&quot;, rep(covars, each = 2))
+centproSensTab$Adjustment &lt;- c(NA, rep(c(&quot;10&quot;, &quot;-10&quot;), length(covars)))
+
+
+centNRSensTab &lt;- matrix(0, nrow = length(covars)*2 + 1, ncol = 5) %&gt;%
+  as.data.frame()
+names(centNRSensTab) &lt;- c(&quot;Parameter&quot;, &quot;Adjustment&quot;, &quot;MeanResp&quot;,
+                       &quot;Sensitivity.value&quot;,&quot;Elasticity.value&quot;)
+centNRSensTab$ResponseVar &lt;- &quot;NR&quot;
+centNRSensTab$Parameter &lt;- c(&quot;Defaults&quot;, rep(covars, each = 2))
+centNRSensTab$Adjustment &lt;- c(NA, rep(c(&quot;10&quot;, &quot;-10&quot;), length(covars)))</code></pre>
+<p>Run sensitivity analysis.</p>
+<pre class="r"><code>centyldSensTab &lt;- sensitivity(centyldSensTab, &quot;yld&quot;, dv, modY1_cent)
+centproSensTab &lt;- sensitivity(centproSensTab, &quot;pro&quot;, dv, modP1_cent)
+centNRSensTab &lt;- sensitivity(centNRSensTab, &quot;NR&quot;, dv, modNR1_cent)</code></pre>
+</div>
+<div id="save-outputs-3" class="section level4">
+<h4>Save Outputs</h4>
+<pre class="r"><code>sensTable &lt;- rbind(yldSensTab, proSensTab, NRSensTab)
+sensTable$field &lt;- field_name
+data.table::fwrite(sensTable,
+                   paste0(&quot;results/&quot;, field_name, &quot;/&quot;, 
+                          field_name, &quot;_sensTable_&quot;, year))
+sensTable &lt;- rbind(centyldSensTab, centproSensTab, centNRSensTab)
+sensTable$field &lt;- field_name
+data.table::fwrite(sensTable,
+                   paste0(&quot;results/&quot;, field_name, &quot;/&quot;, 
+                          field_name, &quot;_sensTableCent_&quot;, year))</code></pre>
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
